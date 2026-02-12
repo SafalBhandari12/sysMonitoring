@@ -12,5 +12,9 @@ class ApiController {
     const response = await ApiService.RegisterApi(data.data);
     res.json(response);
   }
+  static async GetStatus(req:Request,res:Response){
+    const stats = await ApiService.GetStats();
+    res.json(stats);
+  }
 }
 export default ApiController;

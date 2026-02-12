@@ -1,7 +1,12 @@
 import cron from "node-cron";
-import { getResponse } from "../lib/fetch.js";
+import { getResponse, hitApi } from "../lib/fetch.js";
+import prisma from "../utils/prisma.js";
 
-cron.schedule("* * * * *", () => {
-  getResponse("https://jsonplaceholder.typicode.com/todos/1", "GET");
-  console.log("Running a task every minute");
+cron.schedule("*/15 * * * *", () => {
+  console.log("Running a task every 15 minutes");
+  hitApi();
+});
+
+cron.schedule("* * * */1 *", async () => {
+  console.log("Running a task every day at midnight");
 });

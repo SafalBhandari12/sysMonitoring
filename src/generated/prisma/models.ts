@@ -9,4 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Api.js'
+export type * from './models/ApiResponse.js'
+export type * from './models/DailyStats.js'
 export type * from './commonInputTypes.js'

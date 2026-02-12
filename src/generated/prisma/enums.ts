@@ -18,3 +18,13 @@ export const methodEnum = {
 } as const
 
 export type methodEnum = (typeof methodEnum)[keyof typeof methodEnum]
+
+
+export const apiStatusEnum = {
+  UP: 'UP',
+  DOWN: 'DOWN',
+  TIMEOUT: 'TIMEOUT',
+  ERROR: 'ERROR'
+} as const
+
+export type apiStatusEnum = (typeof apiStatusEnum)[keyof typeof apiStatusEnum]

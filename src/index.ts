@@ -2,14 +2,11 @@ import "dotenv/config";
 import "./cron/index.js";
 
 import express, { type Request, type Response } from "express";
-import zod from "zod";
-import prisma from "./utils/prisma.js";
-import { Prisma } from "./generated/prisma/client.js";
 import { getResponse } from "./lib/fetch.js";
 import { asyncHandler } from "./lib/asyncHandler.js";
-import ApiService from "./services/api.service.js";
 import ApiController from "./controller/api.controller.js";
 import { errorHandler } from "./lib/errorHandler.js";
+import { processUrls } from "./cron/index.js";
 
 const app = express();
 
@@ -21,7 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.get("/schedule", async (req: Request, res: Response) => {
   try {
-    getResponse("https://jsonplaceholder.typicode.com/todos/1", "GET");
+    processUrls();
     res.json({ message: "Scheduled API call" });
   } catch (e) {
     console.error(e);
@@ -30,6 +27,8 @@ app.get("/schedule", async (req: Request, res: Response) => {
 });
 
 app.post("/register-api", asyncHandler(ApiController.RegisterApi));
+
+app.get("/stats", asyncHandler(ApiController.GetStatus));
 
 app.use(errorHandler);
 

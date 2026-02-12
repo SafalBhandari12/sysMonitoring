@@ -51,7 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Api: 'Api'
+  Api: 'Api',
+  ApiResponse: 'ApiResponse',
+  DailyStats: 'DailyStats'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,12 +79,38 @@ export const ApiScalarFieldEnum = {
   method: 'method',
   headers: 'headers',
   body: 'body',
-  statusCode: 'statusCode',
+  upTime: 'upTime',
+  processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ApiScalarFieldEnum = (typeof ApiScalarFieldEnum)[keyof typeof ApiScalarFieldEnum]
+
+
+export const ApiResponseScalarFieldEnum = {
+  id: 'id',
+  apiId: 'apiId',
+  responseTime: 'responseTime',
+  statusCode: 'statusCode',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type ApiResponseScalarFieldEnum = (typeof ApiResponseScalarFieldEnum)[keyof typeof ApiResponseScalarFieldEnum]
+
+
+export const DailyStatsScalarFieldEnum = {
+  id: 'id',
+  apiId: 'apiId',
+  date: 'date',
+  upCount: 'upCount',
+  totalCount: 'totalCount',
+  avgResponseTime: 'avgResponseTime',
+  maxResponseTime: 'maxResponseTime'
+} as const
+
+export type DailyStatsScalarFieldEnum = (typeof DailyStatsScalarFieldEnum)[keyof typeof DailyStatsScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -20,6 +20,13 @@ enum methodEnum {
   PATCH
 }
 
+enum apiStatusEnum {
+  UP
+  DOWN
+  TIMEOUT
+  ERROR
+}
+
 model Api{
   id String @id @default(uuid())
 
@@ -28,9 +35,13 @@ model Api{
   method methodEnum
   headers Json?
   body Json?
-  statusCode Int?
+
+  upTime Int @default(0) // in milliseconds
 
   response ApiResponse[]
+  dailyStats DailyStats[]
+
+  processingStatus Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,13 +50,24 @@ model Api{
 model ApiResponse{
   id String @id @default(uuid())
   apiId String
-  statusCode Int
-  isCorrectStatusCode Boolean
+
   responseTime Int // in milliseconds
-  responseBody Json?
+  statusCode Int
+  status apiStatusEnum
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   api Api @relation(fields: [apiId], references: [id])
+}
+
+model DailyStats{
+  id String @id @default(uuid())
+  apiId String
+  api Api @relation(fields: [apiId], references: [id])
+
+  date DateTime @unique  
+  upCount Int @default(0)
+  totalCount Int @default(0)
+  avgResponseTime Int @default(0)
+  maxResponseTime Int @default(0)
 }

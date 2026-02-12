@@ -5,7 +5,7 @@ import { CONFLICT_ERROR } from "../lib/AppError.js";
 
 class ApiService {
   static async RegisterApi(data: apiSchema) {
-    const { method, name, url, body, headers, statusCode } = data;
+    const { method, name, url, body, headers } = data;
     const existingApi = await prisma.api.findFirst({
       where: {
         url,
@@ -21,7 +21,6 @@ class ApiService {
         url,
         body: body ?? Prisma.JsonNull,
         headers: headers ?? Prisma.JsonNull,
-        statusCode: statusCode ?? null,
       },
       select: {
         id: true,
@@ -30,10 +29,12 @@ class ApiService {
         url: true,
         body: true,
         headers: true,
-        statusCode: true,
       },
     });
     return response;
+  }
+  static async GetStats(){
+    
   }
 }
 

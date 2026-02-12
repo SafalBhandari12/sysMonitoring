@@ -44,3 +44,13 @@ export { Prisma }
  * 
  */
 export type Api = Prisma.ApiModel
+/**
+ * Model ApiResponse
+ * 
+ */
+export type ApiResponse = Prisma.ApiResponseModel
+/**
+ * Model DailyStats
+ * 
+ */
+export type DailyStats = Prisma.DailyStatsModel

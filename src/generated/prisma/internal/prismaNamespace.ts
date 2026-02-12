@@ -384,7 +384,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Api: 'Api'
+  Api: 'Api',
+  ApiResponse: 'ApiResponse',
+  DailyStats: 'DailyStats'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "api"
+    modelProps: "api" | "apiResponse" | "dailyStats"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +480,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ApiResponse: {
+      payload: Prisma.$ApiResponsePayload<ExtArgs>
+      fields: Prisma.ApiResponseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ApiResponseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ApiResponseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        findFirst: {
+          args: Prisma.ApiResponseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ApiResponseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        findMany: {
+          args: Prisma.ApiResponseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>[]
+        }
+        create: {
+          args: Prisma.ApiResponseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        createMany: {
+          args: Prisma.ApiResponseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ApiResponseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>[]
+        }
+        delete: {
+          args: Prisma.ApiResponseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        update: {
+          args: Prisma.ApiResponseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        deleteMany: {
+          args: Prisma.ApiResponseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ApiResponseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ApiResponseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>[]
+        }
+        upsert: {
+          args: Prisma.ApiResponseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiResponsePayload>
+        }
+        aggregate: {
+          args: Prisma.ApiResponseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApiResponse>
+        }
+        groupBy: {
+          args: Prisma.ApiResponseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiResponseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ApiResponseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiResponseCountAggregateOutputType> | number
+        }
+      }
+    }
+    DailyStats: {
+      payload: Prisma.$DailyStatsPayload<ExtArgs>
+      fields: Prisma.DailyStatsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyStatsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyStatsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        findFirst: {
+          args: Prisma.DailyStatsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyStatsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        findMany: {
+          args: Prisma.DailyStatsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+        }
+        create: {
+          args: Prisma.DailyStatsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        createMany: {
+          args: Prisma.DailyStatsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyStatsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+        }
+        delete: {
+          args: Prisma.DailyStatsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        update: {
+          args: Prisma.DailyStatsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyStatsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyStatsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyStatsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyStatsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+        }
+        aggregate: {
+          args: Prisma.DailyStatsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyStats>
+        }
+        groupBy: {
+          args: Prisma.DailyStatsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyStatsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyStatsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyStatsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -524,12 +674,38 @@ export const ApiScalarFieldEnum = {
   method: 'method',
   headers: 'headers',
   body: 'body',
-  statusCode: 'statusCode',
+  upTime: 'upTime',
+  processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ApiScalarFieldEnum = (typeof ApiScalarFieldEnum)[keyof typeof ApiScalarFieldEnum]
+
+
+export const ApiResponseScalarFieldEnum = {
+  id: 'id',
+  apiId: 'apiId',
+  responseTime: 'responseTime',
+  statusCode: 'statusCode',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type ApiResponseScalarFieldEnum = (typeof ApiResponseScalarFieldEnum)[keyof typeof ApiResponseScalarFieldEnum]
+
+
+export const DailyStatsScalarFieldEnum = {
+  id: 'id',
+  apiId: 'apiId',
+  date: 'date',
+  upCount: 'upCount',
+  totalCount: 'totalCount',
+  avgResponseTime: 'avgResponseTime',
+  maxResponseTime: 'maxResponseTime'
+} as const
+
+export type DailyStatsScalarFieldEnum = (typeof DailyStatsScalarFieldEnum)[keyof typeof DailyStatsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -636,6 +812,13 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -646,6 +829,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'apiStatusEnum'
+ */
+export type EnumapiStatusEnumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'apiStatusEnum'>
+    
+
+
+/**
+ * Reference to a field of type 'apiStatusEnum[]'
+ */
+export type ListEnumapiStatusEnumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'apiStatusEnum[]'>
     
 
 
@@ -758,6 +955,8 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   api?: Prisma.ApiOmit
+  apiResponse?: Prisma.ApiResponseOmit
+  dailyStats?: Prisma.DailyStatsOmit
 }
 
 /* Types for Logging */
