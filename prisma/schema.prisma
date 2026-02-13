@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+enum methodEnum {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+}
+
+model Api{
+  id String @id @default(uuid())
+
+  name String
+  url String @unique
+  method methodEnum
+  headers Json?
+  body Json?
+  statusCode Int?
+
+  response ApiResponse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApiResponse{
+  id String @id @default(uuid())
+  apiId String
+  statusCode Int
+  isCorrectStatusCode Boolean
+  responseTime Int // in milliseconds
+  responseBody Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  api Api @relation(fields: [apiId], references: [id])
+}
