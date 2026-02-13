@@ -17,5 +17,22 @@ class UnauthorizedError extends AppError {
     super(message, statusCode.UNAUTHORIZED);
   }
 }
+class UNPROCESSABLE_ENTITY extends AppError {
+  constructor(message: string) {
+    super(message, statusCode.UNPROCESSABLE_ENTITY);
+  }
+}
 
-export { BadRequestError, NotFoundError, UnauthorizedError };
+class CONFLICT_ERROR extends AppError {
+  constructor(message: string) {
+    super(message, statusCode.CONFLICT);
+  }
+}
+
+export {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+  UNPROCESSABLE_ENTITY,
+  CONFLICT_ERROR,
+};
