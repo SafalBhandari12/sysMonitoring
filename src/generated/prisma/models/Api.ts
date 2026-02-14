@@ -27,11 +27,11 @@ export type AggregateApi = {
 }
 
 export type ApiAvgAggregateOutputType = {
-  statusCode: number | null
+  upTime: number | null
 }
 
 export type ApiSumAggregateOutputType = {
-  statusCode: number | null
+  upTime: number | null
 }
 
 export type ApiMinAggregateOutputType = {
@@ -39,7 +39,8 @@ export type ApiMinAggregateOutputType = {
   name: string | null
   url: string | null
   method: $Enums.methodEnum | null
-  statusCode: number | null
+  upTime: number | null
+  processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,7 +50,8 @@ export type ApiMaxAggregateOutputType = {
   name: string | null
   url: string | null
   method: $Enums.methodEnum | null
-  statusCode: number | null
+  upTime: number | null
+  processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -61,7 +63,8 @@ export type ApiCountAggregateOutputType = {
   method: number
   headers: number
   body: number
-  statusCode: number
+  upTime: number
+  processingStatus: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -69,11 +72,11 @@ export type ApiCountAggregateOutputType = {
 
 
 export type ApiAvgAggregateInputType = {
-  statusCode?: true
+  upTime?: true
 }
 
 export type ApiSumAggregateInputType = {
-  statusCode?: true
+  upTime?: true
 }
 
 export type ApiMinAggregateInputType = {
@@ -81,7 +84,8 @@ export type ApiMinAggregateInputType = {
   name?: true
   url?: true
   method?: true
-  statusCode?: true
+  upTime?: true
+  processingStatus?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,7 +95,8 @@ export type ApiMaxAggregateInputType = {
   name?: true
   url?: true
   method?: true
-  statusCode?: true
+  upTime?: true
+  processingStatus?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,7 +108,8 @@ export type ApiCountAggregateInputType = {
   method?: true
   headers?: true
   body?: true
-  statusCode?: true
+  upTime?: true
+  processingStatus?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -202,7 +208,8 @@ export type ApiGroupByOutputType = {
   method: $Enums.methodEnum
   headers: runtime.JsonValue | null
   body: runtime.JsonValue | null
-  statusCode: number | null
+  upTime: number
+  processingStatus: boolean
   createdAt: Date
   updatedAt: Date
   _count: ApiCountAggregateOutputType | null
@@ -237,9 +244,12 @@ export type ApiWhereInput = {
   method?: Prisma.EnummethodEnumFilter<"Api"> | $Enums.methodEnum
   headers?: Prisma.JsonNullableFilter<"Api">
   body?: Prisma.JsonNullableFilter<"Api">
-  statusCode?: Prisma.IntNullableFilter<"Api"> | number | null
+  upTime?: Prisma.IntFilter<"Api"> | number
+  processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
+  response?: Prisma.ApiResponseListRelationFilter
+  dailyStats?: Prisma.DailyStatsListRelationFilter
 }
 
 export type ApiOrderByWithRelationInput = {
@@ -249,9 +259,12 @@ export type ApiOrderByWithRelationInput = {
   method?: Prisma.SortOrder
   headers?: Prisma.SortOrderInput | Prisma.SortOrder
   body?: Prisma.SortOrderInput | Prisma.SortOrder
-  statusCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+  processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  response?: Prisma.ApiResponseOrderByRelationAggregateInput
+  dailyStats?: Prisma.DailyStatsOrderByRelationAggregateInput
 }
 
 export type ApiWhereUniqueInput = Prisma.AtLeast<{
@@ -264,9 +277,12 @@ export type ApiWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.EnummethodEnumFilter<"Api"> | $Enums.methodEnum
   headers?: Prisma.JsonNullableFilter<"Api">
   body?: Prisma.JsonNullableFilter<"Api">
-  statusCode?: Prisma.IntNullableFilter<"Api"> | number | null
+  upTime?: Prisma.IntFilter<"Api"> | number
+  processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
+  response?: Prisma.ApiResponseListRelationFilter
+  dailyStats?: Prisma.DailyStatsListRelationFilter
 }, "id" | "url">
 
 export type ApiOrderByWithAggregationInput = {
@@ -276,7 +292,8 @@ export type ApiOrderByWithAggregationInput = {
   method?: Prisma.SortOrder
   headers?: Prisma.SortOrderInput | Prisma.SortOrder
   body?: Prisma.SortOrderInput | Prisma.SortOrder
-  statusCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+  processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ApiCountOrderByAggregateInput
@@ -296,7 +313,8 @@ export type ApiScalarWhereWithAggregatesInput = {
   method?: Prisma.EnummethodEnumWithAggregatesFilter<"Api"> | $Enums.methodEnum
   headers?: Prisma.JsonNullableWithAggregatesFilter<"Api">
   body?: Prisma.JsonNullableWithAggregatesFilter<"Api">
-  statusCode?: Prisma.IntNullableWithAggregatesFilter<"Api"> | number | null
+  upTime?: Prisma.IntWithAggregatesFilter<"Api"> | number
+  processingStatus?: Prisma.BoolWithAggregatesFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
 }
@@ -308,9 +326,12 @@ export type ApiCreateInput = {
   method: $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: number | null
+  upTime?: number
+  processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  response?: Prisma.ApiResponseCreateNestedManyWithoutApiInput
+  dailyStats?: Prisma.DailyStatsCreateNestedManyWithoutApiInput
 }
 
 export type ApiUncheckedCreateInput = {
@@ -320,9 +341,12 @@ export type ApiUncheckedCreateInput = {
   method: $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: number | null
+  upTime?: number
+  processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  response?: Prisma.ApiResponseUncheckedCreateNestedManyWithoutApiInput
+  dailyStats?: Prisma.DailyStatsUncheckedCreateNestedManyWithoutApiInput
 }
 
 export type ApiUpdateInput = {
@@ -332,9 +356,12 @@ export type ApiUpdateInput = {
   method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  response?: Prisma.ApiResponseUpdateManyWithoutApiNestedInput
+  dailyStats?: Prisma.DailyStatsUpdateManyWithoutApiNestedInput
 }
 
 export type ApiUncheckedUpdateInput = {
@@ -344,9 +371,12 @@ export type ApiUncheckedUpdateInput = {
   method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  response?: Prisma.ApiResponseUncheckedUpdateManyWithoutApiNestedInput
+  dailyStats?: Prisma.DailyStatsUncheckedUpdateManyWithoutApiNestedInput
 }
 
 export type ApiCreateManyInput = {
@@ -356,7 +386,8 @@ export type ApiCreateManyInput = {
   method: $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: number | null
+  upTime?: number
+  processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -368,7 +399,8 @@ export type ApiUpdateManyMutationInput = {
   method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -380,7 +412,8 @@ export type ApiUncheckedUpdateManyInput = {
   method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -392,13 +425,14 @@ export type ApiCountOrderByAggregateInput = {
   method?: Prisma.SortOrder
   headers?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  statusCode?: Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+  processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ApiAvgOrderByAggregateInput = {
-  statusCode?: Prisma.SortOrder
+  upTime?: Prisma.SortOrder
 }
 
 export type ApiMaxOrderByAggregateInput = {
@@ -406,7 +440,8 @@ export type ApiMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   url?: Prisma.SortOrder
   method?: Prisma.SortOrder
-  statusCode?: Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+  processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -416,13 +451,19 @@ export type ApiMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   url?: Prisma.SortOrder
   method?: Prisma.SortOrder
-  statusCode?: Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+  processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ApiSumOrderByAggregateInput = {
-  statusCode?: Prisma.SortOrder
+  upTime?: Prisma.SortOrder
+}
+
+export type ApiScalarRelationFilter = {
+  is?: Prisma.ApiWhereInput
+  isNot?: Prisma.ApiWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -433,18 +474,232 @@ export type EnummethodEnumFieldUpdateOperationsInput = {
   set?: $Enums.methodEnum
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
+export type IntFieldUpdateOperationsInput = {
+  set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type ApiCreateNestedOneWithoutResponseInput = {
+  create?: Prisma.XOR<Prisma.ApiCreateWithoutResponseInput, Prisma.ApiUncheckedCreateWithoutResponseInput>
+  connectOrCreate?: Prisma.ApiCreateOrConnectWithoutResponseInput
+  connect?: Prisma.ApiWhereUniqueInput
+}
+
+export type ApiUpdateOneRequiredWithoutResponseNestedInput = {
+  create?: Prisma.XOR<Prisma.ApiCreateWithoutResponseInput, Prisma.ApiUncheckedCreateWithoutResponseInput>
+  connectOrCreate?: Prisma.ApiCreateOrConnectWithoutResponseInput
+  upsert?: Prisma.ApiUpsertWithoutResponseInput
+  connect?: Prisma.ApiWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApiUpdateToOneWithWhereWithoutResponseInput, Prisma.ApiUpdateWithoutResponseInput>, Prisma.ApiUncheckedUpdateWithoutResponseInput>
+}
+
+export type ApiCreateNestedOneWithoutDailyStatsInput = {
+  create?: Prisma.XOR<Prisma.ApiCreateWithoutDailyStatsInput, Prisma.ApiUncheckedCreateWithoutDailyStatsInput>
+  connectOrCreate?: Prisma.ApiCreateOrConnectWithoutDailyStatsInput
+  connect?: Prisma.ApiWhereUniqueInput
+}
+
+export type ApiUpdateOneRequiredWithoutDailyStatsNestedInput = {
+  create?: Prisma.XOR<Prisma.ApiCreateWithoutDailyStatsInput, Prisma.ApiUncheckedCreateWithoutDailyStatsInput>
+  connectOrCreate?: Prisma.ApiCreateOrConnectWithoutDailyStatsInput
+  upsert?: Prisma.ApiUpsertWithoutDailyStatsInput
+  connect?: Prisma.ApiWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApiUpdateToOneWithWhereWithoutDailyStatsInput, Prisma.ApiUpdateWithoutDailyStatsInput>, Prisma.ApiUncheckedUpdateWithoutDailyStatsInput>
+}
+
+export type ApiCreateWithoutResponseInput = {
+  id?: string
+  name: string
+  url: string
+  method: $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: number
+  processingStatus?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  dailyStats?: Prisma.DailyStatsCreateNestedManyWithoutApiInput
+}
+
+export type ApiUncheckedCreateWithoutResponseInput = {
+  id?: string
+  name: string
+  url: string
+  method: $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: number
+  processingStatus?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  dailyStats?: Prisma.DailyStatsUncheckedCreateNestedManyWithoutApiInput
+}
+
+export type ApiCreateOrConnectWithoutResponseInput = {
+  where: Prisma.ApiWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApiCreateWithoutResponseInput, Prisma.ApiUncheckedCreateWithoutResponseInput>
+}
+
+export type ApiUpsertWithoutResponseInput = {
+  update: Prisma.XOR<Prisma.ApiUpdateWithoutResponseInput, Prisma.ApiUncheckedUpdateWithoutResponseInput>
+  create: Prisma.XOR<Prisma.ApiCreateWithoutResponseInput, Prisma.ApiUncheckedCreateWithoutResponseInput>
+  where?: Prisma.ApiWhereInput
+}
+
+export type ApiUpdateToOneWithWhereWithoutResponseInput = {
+  where?: Prisma.ApiWhereInput
+  data: Prisma.XOR<Prisma.ApiUpdateWithoutResponseInput, Prisma.ApiUncheckedUpdateWithoutResponseInput>
+}
+
+export type ApiUpdateWithoutResponseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dailyStats?: Prisma.DailyStatsUpdateManyWithoutApiNestedInput
+}
+
+export type ApiUncheckedUpdateWithoutResponseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dailyStats?: Prisma.DailyStatsUncheckedUpdateManyWithoutApiNestedInput
+}
+
+export type ApiCreateWithoutDailyStatsInput = {
+  id?: string
+  name: string
+  url: string
+  method: $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: number
+  processingStatus?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  response?: Prisma.ApiResponseCreateNestedManyWithoutApiInput
+}
+
+export type ApiUncheckedCreateWithoutDailyStatsInput = {
+  id?: string
+  name: string
+  url: string
+  method: $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: number
+  processingStatus?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  response?: Prisma.ApiResponseUncheckedCreateNestedManyWithoutApiInput
+}
+
+export type ApiCreateOrConnectWithoutDailyStatsInput = {
+  where: Prisma.ApiWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApiCreateWithoutDailyStatsInput, Prisma.ApiUncheckedCreateWithoutDailyStatsInput>
+}
+
+export type ApiUpsertWithoutDailyStatsInput = {
+  update: Prisma.XOR<Prisma.ApiUpdateWithoutDailyStatsInput, Prisma.ApiUncheckedUpdateWithoutDailyStatsInput>
+  create: Prisma.XOR<Prisma.ApiCreateWithoutDailyStatsInput, Prisma.ApiUncheckedCreateWithoutDailyStatsInput>
+  where?: Prisma.ApiWhereInput
+}
+
+export type ApiUpdateToOneWithWhereWithoutDailyStatsInput = {
+  where?: Prisma.ApiWhereInput
+  data: Prisma.XOR<Prisma.ApiUpdateWithoutDailyStatsInput, Prisma.ApiUncheckedUpdateWithoutDailyStatsInput>
+}
+
+export type ApiUpdateWithoutDailyStatsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  response?: Prisma.ApiResponseUpdateManyWithoutApiNestedInput
+}
+
+export type ApiUncheckedUpdateWithoutDailyStatsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  method?: Prisma.EnummethodEnumFieldUpdateOperationsInput | $Enums.methodEnum
+  headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  response?: Prisma.ApiResponseUncheckedUpdateManyWithoutApiNestedInput
+}
+
+
+/**
+ * Count Type ApiCountOutputType
+ */
+
+export type ApiCountOutputType = {
+  response: number
+  dailyStats: number
+}
+
+export type ApiCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  response?: boolean | ApiCountOutputTypeCountResponseArgs
+  dailyStats?: boolean | ApiCountOutputTypeCountDailyStatsArgs
+}
+
+/**
+ * ApiCountOutputType without action
+ */
+export type ApiCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ApiCountOutputType
+   */
+  select?: Prisma.ApiCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ApiCountOutputType without action
+ */
+export type ApiCountOutputTypeCountResponseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApiResponseWhereInput
+}
+
+/**
+ * ApiCountOutputType without action
+ */
+export type ApiCountOutputTypeCountDailyStatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyStatsWhereInput
+}
 
 
 export type ApiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -454,9 +709,13 @@ export type ApiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   method?: boolean
   headers?: boolean
   body?: boolean
-  statusCode?: boolean
+  upTime?: boolean
+  processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  response?: boolean | Prisma.Api$responseArgs<ExtArgs>
+  dailyStats?: boolean | Prisma.Api$dailyStatsArgs<ExtArgs>
+  _count?: boolean | Prisma.ApiCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["api"]>
 
 export type ApiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -466,7 +725,8 @@ export type ApiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   method?: boolean
   headers?: boolean
   body?: boolean
-  statusCode?: boolean
+  upTime?: boolean
+  processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["api"]>
@@ -478,7 +738,8 @@ export type ApiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   method?: boolean
   headers?: boolean
   body?: boolean
-  statusCode?: boolean
+  upTime?: boolean
+  processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["api"]>
@@ -490,16 +751,27 @@ export type ApiSelectScalar = {
   method?: boolean
   headers?: boolean
   body?: boolean
-  statusCode?: boolean
+  upTime?: boolean
+  processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "statusCode" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
+export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "upTime" | "processingStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
+export type ApiInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  response?: boolean | Prisma.Api$responseArgs<ExtArgs>
+  dailyStats?: boolean | Prisma.Api$dailyStatsArgs<ExtArgs>
+  _count?: boolean | Prisma.ApiCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ApiIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ApiIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ApiPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Api"
-  objects: {}
+  objects: {
+    response: Prisma.$ApiResponsePayload<ExtArgs>[]
+    dailyStats: Prisma.$DailyStatsPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
@@ -507,7 +779,8 @@ export type $ApiPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     method: $Enums.methodEnum
     headers: runtime.JsonValue | null
     body: runtime.JsonValue | null
-    statusCode: number | null
+    upTime: number
+    processingStatus: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["api"]>
@@ -904,6 +1177,8 @@ readonly fields: ApiFieldRefs;
  */
 export interface Prisma__ApiClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  response<T extends Prisma.Api$responseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Api$responseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApiResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dailyStats<T extends Prisma.Api$dailyStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Api$dailyStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -939,7 +1214,8 @@ export interface ApiFieldRefs {
   readonly method: Prisma.FieldRef<"Api", 'methodEnum'>
   readonly headers: Prisma.FieldRef<"Api", 'Json'>
   readonly body: Prisma.FieldRef<"Api", 'Json'>
-  readonly statusCode: Prisma.FieldRef<"Api", 'Int'>
+  readonly upTime: Prisma.FieldRef<"Api", 'Int'>
+  readonly processingStatus: Prisma.FieldRef<"Api", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Api", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Api", 'DateTime'>
 }
@@ -959,6 +1235,10 @@ export type ApiFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * Filter, which Api to fetch.
    */
   where: Prisma.ApiWhereUniqueInput
@@ -977,6 +1257,10 @@ export type ApiFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * Filter, which Api to fetch.
    */
   where: Prisma.ApiWhereUniqueInput
@@ -994,6 +1278,10 @@ export type ApiFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Api
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
   /**
    * Filter, which Api to fetch.
    */
@@ -1043,6 +1331,10 @@ export type ApiFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * Filter, which Api to fetch.
    */
   where?: Prisma.ApiWhereInput
@@ -1091,6 +1383,10 @@ export type ApiFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * Filter, which Apis to fetch.
    */
   where?: Prisma.ApiWhereInput
@@ -1133,6 +1429,10 @@ export type ApiCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    * Omit specific fields from the Api
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
   /**
    * The data needed to create a Api.
    */
@@ -1181,6 +1481,10 @@ export type ApiUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    * Omit specific fields from the Api
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
   /**
    * The data needed to update a Api.
    */
@@ -1248,6 +1552,10 @@ export type ApiUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * The filter to search for the Api to update in case it exists.
    */
   where: Prisma.ApiWhereUniqueInput
@@ -1274,6 +1582,10 @@ export type ApiDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
+  /**
    * Filter which Api to delete.
    */
   where: Prisma.ApiWhereUniqueInput
@@ -1294,6 +1606,54 @@ export type ApiDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * Api.response
+ */
+export type Api$responseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ApiResponse
+   */
+  select?: Prisma.ApiResponseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ApiResponse
+   */
+  omit?: Prisma.ApiResponseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiResponseInclude<ExtArgs> | null
+  where?: Prisma.ApiResponseWhereInput
+  orderBy?: Prisma.ApiResponseOrderByWithRelationInput | Prisma.ApiResponseOrderByWithRelationInput[]
+  cursor?: Prisma.ApiResponseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApiResponseScalarFieldEnum | Prisma.ApiResponseScalarFieldEnum[]
+}
+
+/**
+ * Api.dailyStats
+ */
+export type Api$dailyStatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyStats
+   */
+  select?: Prisma.DailyStatsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyStats
+   */
+  omit?: Prisma.DailyStatsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyStatsInclude<ExtArgs> | null
+  where?: Prisma.DailyStatsWhereInput
+  orderBy?: Prisma.DailyStatsOrderByWithRelationInput | Prisma.DailyStatsOrderByWithRelationInput[]
+  cursor?: Prisma.DailyStatsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyStatsScalarFieldEnum | Prisma.DailyStatsScalarFieldEnum[]
+}
+
+/**
  * Api without action
  */
 export type ApiDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1305,4 +1665,8 @@ export type ApiDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Api
    */
   omit?: Prisma.ApiOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApiInclude<ExtArgs> | null
 }
