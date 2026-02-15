@@ -33,8 +33,28 @@ class ApiService {
     });
     return response;
   }
-  static async GetStats(){
-    
+  static async GetDetails(url: string) {
+    const result = await prisma.$transaction(async (tx) => {
+      const apiDetails = await tx.api.findUnique({
+        where: { url: url },
+        select: { upTime: true, averageResponseTime: true, id: true },
+      });
+      const dailyStats = await tx.dailyStats.findMany({
+        where: { apiId: apiDetails!.id },
+        orderBy: { date: "desc" },
+        take: 90,
+        select: {
+          upTime: true,
+          date: true,
+        },
+      });
+      return {
+        upTime: apiDetails!.upTime,
+        averageResponseTime: apiDetails!.averageResponseTime,
+        dailyStats,
+      };
+    });
+    return result;
   }
 }
 

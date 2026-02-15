@@ -28,10 +28,12 @@ export type AggregateApi = {
 
 export type ApiAvgAggregateOutputType = {
   upTime: number | null
+  averageResponseTime: number | null
 }
 
 export type ApiSumAggregateOutputType = {
   upTime: number | null
+  averageResponseTime: number | null
 }
 
 export type ApiMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type ApiMinAggregateOutputType = {
   url: string | null
   method: $Enums.methodEnum | null
   upTime: number | null
+  averageResponseTime: number | null
   processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -51,6 +54,7 @@ export type ApiMaxAggregateOutputType = {
   url: string | null
   method: $Enums.methodEnum | null
   upTime: number | null
+  averageResponseTime: number | null
   processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,6 +68,7 @@ export type ApiCountAggregateOutputType = {
   headers: number
   body: number
   upTime: number
+  averageResponseTime: number
   processingStatus: number
   createdAt: number
   updatedAt: number
@@ -73,10 +78,12 @@ export type ApiCountAggregateOutputType = {
 
 export type ApiAvgAggregateInputType = {
   upTime?: true
+  averageResponseTime?: true
 }
 
 export type ApiSumAggregateInputType = {
   upTime?: true
+  averageResponseTime?: true
 }
 
 export type ApiMinAggregateInputType = {
@@ -85,6 +92,7 @@ export type ApiMinAggregateInputType = {
   url?: true
   method?: true
   upTime?: true
+  averageResponseTime?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -96,6 +104,7 @@ export type ApiMaxAggregateInputType = {
   url?: true
   method?: true
   upTime?: true
+  averageResponseTime?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -109,6 +118,7 @@ export type ApiCountAggregateInputType = {
   headers?: true
   body?: true
   upTime?: true
+  averageResponseTime?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -209,6 +219,7 @@ export type ApiGroupByOutputType = {
   headers: runtime.JsonValue | null
   body: runtime.JsonValue | null
   upTime: number
+  averageResponseTime: number
   processingStatus: boolean
   createdAt: Date
   updatedAt: Date
@@ -245,6 +256,7 @@ export type ApiWhereInput = {
   headers?: Prisma.JsonNullableFilter<"Api">
   body?: Prisma.JsonNullableFilter<"Api">
   upTime?: Prisma.IntFilter<"Api"> | number
+  averageResponseTime?: Prisma.IntFilter<"Api"> | number
   processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
@@ -260,6 +272,7 @@ export type ApiOrderByWithRelationInput = {
   headers?: Prisma.SortOrderInput | Prisma.SortOrder
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -278,6 +291,7 @@ export type ApiWhereUniqueInput = Prisma.AtLeast<{
   headers?: Prisma.JsonNullableFilter<"Api">
   body?: Prisma.JsonNullableFilter<"Api">
   upTime?: Prisma.IntFilter<"Api"> | number
+  averageResponseTime?: Prisma.IntFilter<"Api"> | number
   processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
@@ -293,6 +307,7 @@ export type ApiOrderByWithAggregationInput = {
   headers?: Prisma.SortOrderInput | Prisma.SortOrder
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -314,6 +329,7 @@ export type ApiScalarWhereWithAggregatesInput = {
   headers?: Prisma.JsonNullableWithAggregatesFilter<"Api">
   body?: Prisma.JsonNullableWithAggregatesFilter<"Api">
   upTime?: Prisma.IntWithAggregatesFilter<"Api"> | number
+  averageResponseTime?: Prisma.IntWithAggregatesFilter<"Api"> | number
   processingStatus?: Prisma.BoolWithAggregatesFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
@@ -327,6 +343,7 @@ export type ApiCreateInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -342,6 +359,7 @@ export type ApiUncheckedCreateInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -357,6 +375,7 @@ export type ApiUpdateInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -372,6 +391,7 @@ export type ApiUncheckedUpdateInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,6 +407,7 @@ export type ApiCreateManyInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -400,6 +421,7 @@ export type ApiUpdateManyMutationInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,6 +435,7 @@ export type ApiUncheckedUpdateManyInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -426,6 +449,7 @@ export type ApiCountOrderByAggregateInput = {
   headers?: Prisma.SortOrder
   body?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -433,6 +457,7 @@ export type ApiCountOrderByAggregateInput = {
 
 export type ApiAvgOrderByAggregateInput = {
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
 }
 
 export type ApiMaxOrderByAggregateInput = {
@@ -441,6 +466,7 @@ export type ApiMaxOrderByAggregateInput = {
   url?: Prisma.SortOrder
   method?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -452,6 +478,7 @@ export type ApiMinOrderByAggregateInput = {
   url?: Prisma.SortOrder
   method?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -459,6 +486,7 @@ export type ApiMinOrderByAggregateInput = {
 
 export type ApiSumOrderByAggregateInput = {
   upTime?: Prisma.SortOrder
+  averageResponseTime?: Prisma.SortOrder
 }
 
 export type ApiScalarRelationFilter = {
@@ -526,6 +554,7 @@ export type ApiCreateWithoutResponseInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -540,6 +569,7 @@ export type ApiUncheckedCreateWithoutResponseInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,6 +600,7 @@ export type ApiUpdateWithoutResponseInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +615,7 @@ export type ApiUncheckedUpdateWithoutResponseInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -598,6 +630,7 @@ export type ApiCreateWithoutDailyStatsInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -612,6 +645,7 @@ export type ApiUncheckedCreateWithoutDailyStatsInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
+  averageResponseTime?: number
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -642,6 +676,7 @@ export type ApiUpdateWithoutDailyStatsInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +691,7 @@ export type ApiUncheckedUpdateWithoutDailyStatsInput = {
   headers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
+  averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,6 +746,7 @@ export type ApiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   headers?: boolean
   body?: boolean
   upTime?: boolean
+  averageResponseTime?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -726,6 +763,7 @@ export type ApiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   headers?: boolean
   body?: boolean
   upTime?: boolean
+  averageResponseTime?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -739,6 +777,7 @@ export type ApiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   headers?: boolean
   body?: boolean
   upTime?: boolean
+  averageResponseTime?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -752,12 +791,13 @@ export type ApiSelectScalar = {
   headers?: boolean
   body?: boolean
   upTime?: boolean
+  averageResponseTime?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "upTime" | "processingStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
+export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "upTime" | "averageResponseTime" | "processingStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
 export type ApiInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   response?: boolean | Prisma.Api$responseArgs<ExtArgs>
   dailyStats?: boolean | Prisma.Api$dailyStatsArgs<ExtArgs>
@@ -780,6 +820,7 @@ export type $ApiPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     headers: runtime.JsonValue | null
     body: runtime.JsonValue | null
     upTime: number
+    averageResponseTime: number
     processingStatus: boolean
     createdAt: Date
     updatedAt: Date
@@ -1215,6 +1256,7 @@ export interface ApiFieldRefs {
   readonly headers: Prisma.FieldRef<"Api", 'Json'>
   readonly body: Prisma.FieldRef<"Api", 'Json'>
   readonly upTime: Prisma.FieldRef<"Api", 'Int'>
+  readonly averageResponseTime: Prisma.FieldRef<"Api", 'Int'>
   readonly processingStatus: Prisma.FieldRef<"Api", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Api", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Api", 'DateTime'>

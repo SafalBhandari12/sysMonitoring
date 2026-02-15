@@ -36,7 +36,8 @@ model Api{
   headers Json?
   body Json?
 
-  upTime Int @default(0) // in milliseconds
+  upTime Int @default(0) // Percentage of successful responses
+  averageResponseTime Int @default(0) // in milliseconds
 
   response ApiResponse[]
   dailyStats DailyStats[]
@@ -68,6 +69,9 @@ model DailyStats{
   date DateTime @unique  
   upCount Int @default(0)
   totalCount Int @default(0)
+
+  upTime Int @default(0) // Percentage of successful responses
+  
   avgResponseTime Int @default(0)
   maxResponseTime Int @default(0)
 }

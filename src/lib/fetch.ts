@@ -77,6 +77,7 @@ export const hitApi = async () => {
               avgResponseTime: response.responseTime,
               maxResponseTime: response.responseTime,
               totalCount: 1,
+              upTime: isUp ? 100 : 0,
             },
           });
         } else {
@@ -97,6 +98,7 @@ export const hitApi = async () => {
               avgResponseTime: newAvgResponseTime,
               maxResponseTime: newMaxResponseTime,
               totalCount: newTotalCount,
+              upTime: (newUpCount / newTotalCount) * 100,
             },
           });
         }
@@ -116,3 +118,42 @@ export const hitApi = async () => {
   }
 };
 
+export const processApiForUptime = async () => {
+  const apis = await prisma.api.findMany({ select: { id: true } });
+  for (const api of apis) {
+    await calculateUptime(api.id);
+  }
+};
+
+export const calculateUptime = async (apiId: string) => {
+  try {
+    const stats = await prisma.dailyStats.findMany({
+      where: {
+        apiId,
+        date: {
+          gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+    let uptime = 0;
+    let total = 0;
+    let totalResponseTime = 0;
+    for (const stat of stats) {
+      uptime += stat.upCount;
+      total += stat.totalCount;
+      totalResponseTime += stat.avgResponseTime * stat.totalCount;
+    }
+
+    const uptimePercentage = total > 0 ? (uptime / total) * 100 : 0;
+    const averageResponseTime = total > 0 ? totalResponseTime / total : 0;
+    await prisma.api.update({
+      where: { id: apiId },
+      data: { upTime: uptimePercentage, averageResponseTime },
+    });
+    console.log(
+      `Uptime percentage over last 90 days: ${uptimePercentage.toFixed(2)}%`,
+    );
+  } catch (e) {
+    console.error(e);
+  }
+};

@@ -80,6 +80,7 @@ export const ApiScalarFieldEnum = {
   headers: 'headers',
   body: 'body',
   upTime: 'upTime',
+  averageResponseTime: 'averageResponseTime',
   processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -106,6 +107,7 @@ export const DailyStatsScalarFieldEnum = {
   date: 'date',
   upCount: 'upCount',
   totalCount: 'totalCount',
+  upTime: 'upTime',
   avgResponseTime: 'avgResponseTime',
   maxResponseTime: 'maxResponseTime'
 } as const

@@ -8,4 +8,9 @@ export const apiSchema = zod.object({
   body: zod.record(zod.string(), zod.string()).optional(),
 });
 
+export const apiDetailsSchema = zod.object({
+  url: zod.coerce.string().url(),
+});
+
 export type apiSchema = zod.infer<typeof apiSchema>;
+export type apiDetailsSchema = zod.infer<typeof apiDetailsSchema>;

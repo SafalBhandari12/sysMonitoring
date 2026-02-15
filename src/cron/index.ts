@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { getResponse, hitApi } from "../lib/fetch.js";
+import { hitApi, processApiForUptime } from "../lib/fetch.js";
 import prisma from "../utils/prisma.js";
 
 cron.schedule("*/15 * * * *", () => {
@@ -7,6 +7,7 @@ cron.schedule("*/15 * * * *", () => {
   hitApi();
 });
 
-cron.schedule("* * * */1 *", async () => {
+cron.schedule("0 0 * * *", async () => {
   console.log("Running a task every day at midnight");
+  await processApiForUptime();
 });
