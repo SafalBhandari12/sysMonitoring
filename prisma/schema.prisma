@@ -12,6 +12,13 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum DomainVerificationStatus{
+  PENDING
+  VERIFIED
+  FAILED
+}
+
 enum methodEnum {
   GET
   POST
@@ -36,8 +43,14 @@ model Api{
   headers Json?
   body Json?
 
-  upTime Int @default(0) // Percentage of successful responses
+  upTime Int @default(0) // Percentage of  successful responses
   averageResponseTime Int @default(0) // in milliseconds
+
+  verificationStatus DomainVerificationStatus @default(PENDING)
+  verificationCode String @default(cuid())
+  lastVerificationAttempt DateTime?
+  verificationAttempts Int @default(0)
+  verifiedAt DateTime?
 
   response ApiResponse[]
   dailyStats DailyStats[]
@@ -66,7 +79,8 @@ model DailyStats{
   apiId String
   api Api @relation(fields: [apiId], references: [id])
 
-  date DateTime @unique  
+  date DateTime
+    @@unique([apiId, date])
   upCount Int @default(0)
   totalCount Int @default(0)
 

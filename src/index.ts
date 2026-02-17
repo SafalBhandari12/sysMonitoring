@@ -7,6 +7,7 @@ import { asyncHandler } from "./lib/asyncHandler.js";
 import ApiController from "./controller/api.controller.js";
 import { errorHandler } from "./lib/errorHandler.js";
 import ApiService from "./services/api.service.js";
+import VerificationController from "./controller/verification.controller.js";
 
 const app = express();
 
@@ -39,6 +40,13 @@ app.get("/uptime", async (req: Request, res: Response) => {
 });
 
 app.post("/register-api", asyncHandler(ApiController.RegisterApi));
+
+app.post("/verify-domain", asyncHandler(VerificationController.verifyDomain));
+
+app.get(
+  "/verification-instructions",
+  asyncHandler(VerificationController.GetVerificationStatus),
+);
 
 app.use(errorHandler);
 

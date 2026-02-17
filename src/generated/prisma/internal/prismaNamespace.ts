@@ -676,6 +676,11 @@ export const ApiScalarFieldEnum = {
   body: 'body',
   upTime: 'upTime',
   averageResponseTime: 'averageResponseTime',
+  verificationStatus: 'verificationStatus',
+  verificationCode: 'verificationCode',
+  lastVerificationAttempt: 'lastVerificationAttempt',
+  verificationAttempts: 'verificationAttempts',
+  verifiedAt: 'verifiedAt',
   processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -814,9 +819,16 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'DomainVerificationStatus'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type EnumDomainVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainVerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DomainVerificationStatus[]'
+ */
+export type ListEnumDomainVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainVerificationStatus[]'>
     
 
 
@@ -831,6 +843,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

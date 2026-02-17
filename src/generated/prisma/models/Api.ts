@@ -29,11 +29,13 @@ export type AggregateApi = {
 export type ApiAvgAggregateOutputType = {
   upTime: number | null
   averageResponseTime: number | null
+  verificationAttempts: number | null
 }
 
 export type ApiSumAggregateOutputType = {
   upTime: number | null
   averageResponseTime: number | null
+  verificationAttempts: number | null
 }
 
 export type ApiMinAggregateOutputType = {
@@ -43,6 +45,11 @@ export type ApiMinAggregateOutputType = {
   method: $Enums.methodEnum | null
   upTime: number | null
   averageResponseTime: number | null
+  verificationStatus: $Enums.DomainVerificationStatus | null
+  verificationCode: string | null
+  lastVerificationAttempt: Date | null
+  verificationAttempts: number | null
+  verifiedAt: Date | null
   processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +62,11 @@ export type ApiMaxAggregateOutputType = {
   method: $Enums.methodEnum | null
   upTime: number | null
   averageResponseTime: number | null
+  verificationStatus: $Enums.DomainVerificationStatus | null
+  verificationCode: string | null
+  lastVerificationAttempt: Date | null
+  verificationAttempts: number | null
+  verifiedAt: Date | null
   processingStatus: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +81,11 @@ export type ApiCountAggregateOutputType = {
   body: number
   upTime: number
   averageResponseTime: number
+  verificationStatus: number
+  verificationCode: number
+  lastVerificationAttempt: number
+  verificationAttempts: number
+  verifiedAt: number
   processingStatus: number
   createdAt: number
   updatedAt: number
@@ -79,11 +96,13 @@ export type ApiCountAggregateOutputType = {
 export type ApiAvgAggregateInputType = {
   upTime?: true
   averageResponseTime?: true
+  verificationAttempts?: true
 }
 
 export type ApiSumAggregateInputType = {
   upTime?: true
   averageResponseTime?: true
+  verificationAttempts?: true
 }
 
 export type ApiMinAggregateInputType = {
@@ -93,6 +112,11 @@ export type ApiMinAggregateInputType = {
   method?: true
   upTime?: true
   averageResponseTime?: true
+  verificationStatus?: true
+  verificationCode?: true
+  lastVerificationAttempt?: true
+  verificationAttempts?: true
+  verifiedAt?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -105,6 +129,11 @@ export type ApiMaxAggregateInputType = {
   method?: true
   upTime?: true
   averageResponseTime?: true
+  verificationStatus?: true
+  verificationCode?: true
+  lastVerificationAttempt?: true
+  verificationAttempts?: true
+  verifiedAt?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -119,6 +148,11 @@ export type ApiCountAggregateInputType = {
   body?: true
   upTime?: true
   averageResponseTime?: true
+  verificationStatus?: true
+  verificationCode?: true
+  lastVerificationAttempt?: true
+  verificationAttempts?: true
+  verifiedAt?: true
   processingStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -220,6 +254,11 @@ export type ApiGroupByOutputType = {
   body: runtime.JsonValue | null
   upTime: number
   averageResponseTime: number
+  verificationStatus: $Enums.DomainVerificationStatus
+  verificationCode: string
+  lastVerificationAttempt: Date | null
+  verificationAttempts: number
+  verifiedAt: Date | null
   processingStatus: boolean
   createdAt: Date
   updatedAt: Date
@@ -257,6 +296,11 @@ export type ApiWhereInput = {
   body?: Prisma.JsonNullableFilter<"Api">
   upTime?: Prisma.IntFilter<"Api"> | number
   averageResponseTime?: Prisma.IntFilter<"Api"> | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFilter<"Api"> | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFilter<"Api"> | string
+  lastVerificationAttempt?: Prisma.DateTimeNullableFilter<"Api"> | Date | string | null
+  verificationAttempts?: Prisma.IntFilter<"Api"> | number
+  verifiedAt?: Prisma.DateTimeNullableFilter<"Api"> | Date | string | null
   processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
@@ -273,6 +317,11 @@ export type ApiOrderByWithRelationInput = {
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationCode?: Prisma.SortOrder
+  lastVerificationAttempt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -292,6 +341,11 @@ export type ApiWhereUniqueInput = Prisma.AtLeast<{
   body?: Prisma.JsonNullableFilter<"Api">
   upTime?: Prisma.IntFilter<"Api"> | number
   averageResponseTime?: Prisma.IntFilter<"Api"> | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFilter<"Api"> | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFilter<"Api"> | string
+  lastVerificationAttempt?: Prisma.DateTimeNullableFilter<"Api"> | Date | string | null
+  verificationAttempts?: Prisma.IntFilter<"Api"> | number
+  verifiedAt?: Prisma.DateTimeNullableFilter<"Api"> | Date | string | null
   processingStatus?: Prisma.BoolFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Api"> | Date | string
@@ -308,6 +362,11 @@ export type ApiOrderByWithAggregationInput = {
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationCode?: Prisma.SortOrder
+  lastVerificationAttempt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -330,6 +389,11 @@ export type ApiScalarWhereWithAggregatesInput = {
   body?: Prisma.JsonNullableWithAggregatesFilter<"Api">
   upTime?: Prisma.IntWithAggregatesFilter<"Api"> | number
   averageResponseTime?: Prisma.IntWithAggregatesFilter<"Api"> | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusWithAggregatesFilter<"Api"> | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringWithAggregatesFilter<"Api"> | string
+  lastVerificationAttempt?: Prisma.DateTimeNullableWithAggregatesFilter<"Api"> | Date | string | null
+  verificationAttempts?: Prisma.IntWithAggregatesFilter<"Api"> | number
+  verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Api"> | Date | string | null
   processingStatus?: Prisma.BoolWithAggregatesFilter<"Api"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Api"> | Date | string
@@ -344,6 +408,11 @@ export type ApiCreateInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -360,6 +429,11 @@ export type ApiUncheckedCreateInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -376,6 +450,11 @@ export type ApiUpdateInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,6 +471,11 @@ export type ApiUncheckedUpdateInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,6 +492,11 @@ export type ApiCreateManyInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -422,6 +511,11 @@ export type ApiUpdateManyMutationInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -436,6 +530,11 @@ export type ApiUncheckedUpdateManyInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -450,6 +549,11 @@ export type ApiCountOrderByAggregateInput = {
   body?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationCode?: Prisma.SortOrder
+  lastVerificationAttempt?: Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -458,6 +562,7 @@ export type ApiCountOrderByAggregateInput = {
 export type ApiAvgOrderByAggregateInput = {
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
 }
 
 export type ApiMaxOrderByAggregateInput = {
@@ -467,6 +572,11 @@ export type ApiMaxOrderByAggregateInput = {
   method?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationCode?: Prisma.SortOrder
+  lastVerificationAttempt?: Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -479,6 +589,11 @@ export type ApiMinOrderByAggregateInput = {
   method?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationCode?: Prisma.SortOrder
+  lastVerificationAttempt?: Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
   processingStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -487,6 +602,7 @@ export type ApiMinOrderByAggregateInput = {
 export type ApiSumOrderByAggregateInput = {
   upTime?: Prisma.SortOrder
   averageResponseTime?: Prisma.SortOrder
+  verificationAttempts?: Prisma.SortOrder
 }
 
 export type ApiScalarRelationFilter = {
@@ -508,6 +624,14 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type EnumDomainVerificationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.DomainVerificationStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -555,6 +679,11 @@ export type ApiCreateWithoutResponseInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,6 +699,11 @@ export type ApiUncheckedCreateWithoutResponseInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -601,6 +735,11 @@ export type ApiUpdateWithoutResponseInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -616,6 +755,11 @@ export type ApiUncheckedUpdateWithoutResponseInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -631,6 +775,11 @@ export type ApiCreateWithoutDailyStatsInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -646,6 +795,11 @@ export type ApiUncheckedCreateWithoutDailyStatsInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: number
   averageResponseTime?: number
+  verificationStatus?: $Enums.DomainVerificationStatus
+  verificationCode?: string
+  lastVerificationAttempt?: Date | string | null
+  verificationAttempts?: number
+  verifiedAt?: Date | string | null
   processingStatus?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -677,6 +831,11 @@ export type ApiUpdateWithoutDailyStatsInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -692,6 +851,11 @@ export type ApiUncheckedUpdateWithoutDailyStatsInput = {
   body?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
   averageResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumDomainVerificationStatusFieldUpdateOperationsInput | $Enums.DomainVerificationStatus
+  verificationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  lastVerificationAttempt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processingStatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -747,6 +911,11 @@ export type ApiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   body?: boolean
   upTime?: boolean
   averageResponseTime?: boolean
+  verificationStatus?: boolean
+  verificationCode?: boolean
+  lastVerificationAttempt?: boolean
+  verificationAttempts?: boolean
+  verifiedAt?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -764,6 +933,11 @@ export type ApiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   body?: boolean
   upTime?: boolean
   averageResponseTime?: boolean
+  verificationStatus?: boolean
+  verificationCode?: boolean
+  lastVerificationAttempt?: boolean
+  verificationAttempts?: boolean
+  verifiedAt?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -778,6 +952,11 @@ export type ApiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   body?: boolean
   upTime?: boolean
   averageResponseTime?: boolean
+  verificationStatus?: boolean
+  verificationCode?: boolean
+  lastVerificationAttempt?: boolean
+  verificationAttempts?: boolean
+  verifiedAt?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -792,12 +971,17 @@ export type ApiSelectScalar = {
   body?: boolean
   upTime?: boolean
   averageResponseTime?: boolean
+  verificationStatus?: boolean
+  verificationCode?: boolean
+  lastVerificationAttempt?: boolean
+  verificationAttempts?: boolean
+  verifiedAt?: boolean
   processingStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "upTime" | "averageResponseTime" | "processingStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
+export type ApiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "method" | "headers" | "body" | "upTime" | "averageResponseTime" | "verificationStatus" | "verificationCode" | "lastVerificationAttempt" | "verificationAttempts" | "verifiedAt" | "processingStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["api"]>
 export type ApiInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   response?: boolean | Prisma.Api$responseArgs<ExtArgs>
   dailyStats?: boolean | Prisma.Api$dailyStatsArgs<ExtArgs>
@@ -821,6 +1005,11 @@ export type $ApiPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     body: runtime.JsonValue | null
     upTime: number
     averageResponseTime: number
+    verificationStatus: $Enums.DomainVerificationStatus
+    verificationCode: string
+    lastVerificationAttempt: Date | null
+    verificationAttempts: number
+    verifiedAt: Date | null
     processingStatus: boolean
     createdAt: Date
     updatedAt: Date
@@ -1257,6 +1446,11 @@ export interface ApiFieldRefs {
   readonly body: Prisma.FieldRef<"Api", 'Json'>
   readonly upTime: Prisma.FieldRef<"Api", 'Int'>
   readonly averageResponseTime: Prisma.FieldRef<"Api", 'Int'>
+  readonly verificationStatus: Prisma.FieldRef<"Api", 'DomainVerificationStatus'>
+  readonly verificationCode: Prisma.FieldRef<"Api", 'String'>
+  readonly lastVerificationAttempt: Prisma.FieldRef<"Api", 'DateTime'>
+  readonly verificationAttempts: Prisma.FieldRef<"Api", 'Int'>
+  readonly verifiedAt: Prisma.FieldRef<"Api", 'DateTime'>
   readonly processingStatus: Prisma.FieldRef<"Api", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Api", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Api", 'DateTime'>

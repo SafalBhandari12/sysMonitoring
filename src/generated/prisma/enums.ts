@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const DomainVerificationStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+  FAILED: 'FAILED'
+} as const
+
+export type DomainVerificationStatus = (typeof DomainVerificationStatus)[keyof typeof DomainVerificationStatus]
+
+
 export const methodEnum = {
   GET: 'GET',
   POST: 'POST',
