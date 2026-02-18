@@ -13,7 +13,7 @@ datasource db {
   provider = "postgresql"
 }
 
-enum DomainVerificationStatus{
+enum DomainVerificationStatus {
   PENDING
   VERIFIED
   FAILED
@@ -34,58 +34,73 @@ enum apiStatusEnum {
   ERROR
 }
 
-model Api{
+model Domain {
   id String @id @default(uuid())
 
-  name String
-  url String @unique
-  method methodEnum
-  headers Json?
-  body Json?
+  verificationStatus      DomainVerificationStatus @default(PENDING)
+  verificationCode        String                   @default(cuid())
+  lastVerificationAttempt DateTime?
+  verificationAttempts    Int                      @default(0)
+  verifiedAt              DateTime?
 
-  upTime Int @default(0) // Percentage of  successful responses
+  apis Api[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Api {
+  id String @id @default(uuid())
+
+  domainId  String
+  domain Domain @relation(fields: [domainId], references: [id])
+
+  path String
+
+  name    String
+  method  methodEnum
+  headers Json?
+  body    Json?
+
+  upTime              Int @default(0) // Percentage of  successful responses
   averageResponseTime Int @default(0) // in milliseconds
 
-  verificationStatus DomainVerificationStatus @default(PENDING)
-  verificationCode String @default(cuid())
-  lastVerificationAttempt DateTime?
-  verificationAttempts Int @default(0)
-  verifiedAt DateTime?
-
-  response ApiResponse[]
+  response   ApiResponse[]
   dailyStats DailyStats[]
 
   processingStatus Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([domainId, path])
 }
 
-model ApiResponse{
-  id String @id @default(uuid())
+model ApiResponse {
+  id    String @id @default(uuid())
   apiId String
 
   responseTime Int // in milliseconds
-  statusCode Int
-  status apiStatusEnum
+  statusCode   Int
+  status       apiStatusEnum
 
   createdAt DateTime @default(now())
 
   api Api @relation(fields: [apiId], references: [id])
 }
 
-model DailyStats{
-  id String @id @default(uuid())
+model DailyStats {
+  id    String @id @default(uuid())
   apiId String
-  api Api @relation(fields: [apiId], references: [id])
+  api   Api    @relation(fields: [apiId], references: [id])
 
-  date DateTime
-    @@unique([apiId, date])
-  upCount Int @default(0)
-  totalCount Int @default(0)
+  date       DateTime
+  upCount    Int      @default(0)
+  totalCount Int      @default(0)
 
   upTime Int @default(0) // Percentage of successful responses
-  
+
   avgResponseTime Int @default(0)
-  maxResponseTime Int @default(0)
+
+  @@unique([apiId, date])
 }
