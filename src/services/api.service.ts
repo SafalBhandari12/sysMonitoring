@@ -8,33 +8,41 @@ import { CONFLICT_ERROR, NotFoundError } from "../lib/AppError.js";
 import { getBaseDomain } from "../utils/domain.js";
 
 class ApiService {
-  // static async GetDetails(url: string) {
-  //   const baseDomain = VerificationService.getBaseDomain(url);
-  //   const result = await prisma.$transaction(async (tx) => {
-  //     const apiDetails = await tx.api.findUnique({
-  //       where: { url: baseDomain },
-  //       select: { upTime: true, averageResponseTime: true, id: true },
-  //     });
-  //     if (!apiDetails) {
-  //       throw new NotFoundError("API not found");
-  //     }
-  //     const dailyStats = await tx.dailyStats.findMany({
-  //       where: { apiId: apiDetails?.id },
-  //       orderBy: { date: "desc" },
-  //       take: 90,
-  //       select: {
-  //         upTime: true,
-  //         date: true,
-  //       },
-  //     });
-  //     return {
-  //       upTime: apiDetails!.upTime,
-  //       averageResponseTime: apiDetails!.averageResponseTime,
-  //       dailyStats,
-  //     };
-  //   });
-  //   return result;
-  // }
+  static async addApi(data: {
+    domainId: string;
+    apiDetails: apiDetailsSchema;
+  }) {
+    const { domainId, apiDetails } = data;
+    const domainExists = await prisma.domain.findUnique({
+      where: { id: domainId },
+    });
+    if (!domainExists) {
+      throw new NotFoundError("Domain not found");
+    }
+    const pathExists = await prisma.api.findFirst({
+      where: {
+        path: apiDetails.path,
+        domainId,
+      },
+    });
+    if (pathExists) {
+      throw new CONFLICT_ERROR("API with the same path already exists");
+    }
+    const response = await prisma.api.create({
+      data: {
+        name: apiDetails.name,
+        method: apiDetails.method,
+        path: apiDetails.path,
+        ...(apiDetails.headers && { headers: apiDetails.headers }),
+        ...(apiDetails.body && { body: apiDetails.body }),
+        domainId,
+      },
+      select: {
+        id: true,
+      },
+    });
+    return response;
+  }
 }
 
 export default ApiService;

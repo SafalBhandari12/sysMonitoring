@@ -5,17 +5,18 @@ import express, { type Request, type Response } from "express";
 import { hitApi, processApiForUptime } from "./lib/fetch.js";
 import { errorHandler } from "./lib/errorHandler.js";
 import domainRouter from "./routes/domain.route.js";
+import apiRouter from "./routes/api.route.js";
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
+app.get("/health", (res: Response) => {
+  return res.json({ status: "OK" });
 });
 
 app.use("/domain", domainRouter);
-app.use("/api",)
+app.use("/api", apiRouter);
 
 // app.get("/details", asyncHandler(ApiController.getDetails));
 
