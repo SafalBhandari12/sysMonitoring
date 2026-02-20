@@ -57,7 +57,6 @@ class DomainService {
       }
     } catch (error) {
       console.error(`DNS lookup failed for ${domain}:`, error);
-      throw new BadRequestError("DNS lookup failed");
     }
 
     const ATTEMPT_MULTIPLIER = 5; // 5 minutes base

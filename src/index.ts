@@ -15,6 +15,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/domain", domainRouter);
+app.use("/api",)
 
 // app.get("/details", asyncHandler(ApiController.getDetails));
 

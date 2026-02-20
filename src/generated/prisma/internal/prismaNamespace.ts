@@ -768,6 +768,8 @@ export const ApiScalarFieldEnum = {
   body: 'body',
   upTime: 'upTime',
   averageResponseTime: 'averageResponseTime',
+  p90: 'p90',
+  p99: 'p99',
   processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

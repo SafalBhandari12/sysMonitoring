@@ -68,6 +68,9 @@ model Api {
   upTime              Int @default(0) // Percentage of  successful responses
   averageResponseTime Int @default(0) // in milliseconds
 
+  p90 Int @default(0) // 90th percentile response time in milliseconds
+  p99 Int @default(0) // 99th percentile response time in milliseconds
+
   response   ApiResponse[]
   dailyStats DailyStats[]
 
