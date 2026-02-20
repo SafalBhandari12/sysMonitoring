@@ -3,11 +3,8 @@ import "./cron/index.js";
 
 import express, { type Request, type Response } from "express";
 import { hitApi, processApiForUptime } from "./lib/fetch.js";
-import { asyncHandler } from "./lib/asyncHandler.js";
-import ApiController from "./controller/api.controller.js";
 import { errorHandler } from "./lib/errorHandler.js";
-import ApiService from "./services/api.service.js";
-import VerificationController from "./controller/verification.controller.js";
+import domainRouter from "./routes/domain.route.js";
 
 const app = express();
 
@@ -17,7 +14,9 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
 });
 
-app.get("/details", asyncHandler(ApiController.getDetails));
+app.use("/domain", domainRouter);
+
+// app.get("/details", asyncHandler(ApiController.getDetails));
 
 app.get("/schedule", async (req: Request, res: Response) => {
   try {
@@ -38,15 +37,6 @@ app.get("/uptime", async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-app.post("/register-api", asyncHandler(ApiController.RegisterApi));
-
-app.post("/verify-domain", asyncHandler(VerificationController.verifyDomain));
-
-app.get(
-  "/verification-instructions",
-  asyncHandler(VerificationController.GetVerificationStatus),
-);
 
 app.use(errorHandler);
 

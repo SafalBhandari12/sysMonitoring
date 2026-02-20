@@ -37,11 +37,14 @@ enum apiStatusEnum {
 model Domain {
   id String @id @default(uuid())
 
+  domain                    String                   @unique
+
   verificationStatus      DomainVerificationStatus @default(PENDING)
   verificationCode        String                   @default(cuid())
   lastVerificationAttempt DateTime?
   verificationAttempts    Int                      @default(0)
   verifiedAt              DateTime?
+  nextVerificationAt      DateTime                 @default(now())
 
   apis Api[]
 

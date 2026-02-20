@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Domain: 'Domain',
   Api: 'Api',
   ApiResponse: 'ApiResponse',
   DailyStats: 'DailyStats'
@@ -72,20 +73,32 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const ApiScalarFieldEnum = {
+export const DomainScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  url: 'url',
-  method: 'method',
-  headers: 'headers',
-  body: 'body',
-  upTime: 'upTime',
-  averageResponseTime: 'averageResponseTime',
+  domain: 'domain',
   verificationStatus: 'verificationStatus',
   verificationCode: 'verificationCode',
   lastVerificationAttempt: 'lastVerificationAttempt',
   verificationAttempts: 'verificationAttempts',
   verifiedAt: 'verifiedAt',
+  nextVerificationAt: 'nextVerificationAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DomainScalarFieldEnum = (typeof DomainScalarFieldEnum)[keyof typeof DomainScalarFieldEnum]
+
+
+export const ApiScalarFieldEnum = {
+  id: 'id',
+  domainId: 'domainId',
+  path: 'path',
+  name: 'name',
+  method: 'method',
+  headers: 'headers',
+  body: 'body',
+  upTime: 'upTime',
+  averageResponseTime: 'averageResponseTime',
   processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -113,8 +126,7 @@ export const DailyStatsScalarFieldEnum = {
   upCount: 'upCount',
   totalCount: 'totalCount',
   upTime: 'upTime',
-  avgResponseTime: 'avgResponseTime',
-  maxResponseTime: 'maxResponseTime'
+  avgResponseTime: 'avgResponseTime'
 } as const
 
 export type DailyStatsScalarFieldEnum = (typeof DailyStatsScalarFieldEnum)[keyof typeof DailyStatsScalarFieldEnum]
@@ -144,6 +156,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -151,12 +171,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
