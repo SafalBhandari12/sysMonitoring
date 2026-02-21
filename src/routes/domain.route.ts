@@ -13,4 +13,6 @@ router.get(
   asyncHandler(DomainController.GetVerificationStatus),
 );
 
+router.get("/details", asyncHandler(DomainController.apiStatusDetails));
+
 export default router;

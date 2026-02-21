@@ -30,14 +30,12 @@ export type DailyStatsAvgAggregateOutputType = {
   upCount: number | null
   totalCount: number | null
   upTime: number | null
-  avgResponseTime: number | null
 }
 
 export type DailyStatsSumAggregateOutputType = {
   upCount: number | null
   totalCount: number | null
   upTime: number | null
-  avgResponseTime: number | null
 }
 
 export type DailyStatsMinAggregateOutputType = {
@@ -47,7 +45,6 @@ export type DailyStatsMinAggregateOutputType = {
   upCount: number | null
   totalCount: number | null
   upTime: number | null
-  avgResponseTime: number | null
 }
 
 export type DailyStatsMaxAggregateOutputType = {
@@ -57,7 +54,6 @@ export type DailyStatsMaxAggregateOutputType = {
   upCount: number | null
   totalCount: number | null
   upTime: number | null
-  avgResponseTime: number | null
 }
 
 export type DailyStatsCountAggregateOutputType = {
@@ -67,7 +63,6 @@ export type DailyStatsCountAggregateOutputType = {
   upCount: number
   totalCount: number
   upTime: number
-  avgResponseTime: number
   _all: number
 }
 
@@ -76,14 +71,12 @@ export type DailyStatsAvgAggregateInputType = {
   upCount?: true
   totalCount?: true
   upTime?: true
-  avgResponseTime?: true
 }
 
 export type DailyStatsSumAggregateInputType = {
   upCount?: true
   totalCount?: true
   upTime?: true
-  avgResponseTime?: true
 }
 
 export type DailyStatsMinAggregateInputType = {
@@ -93,7 +86,6 @@ export type DailyStatsMinAggregateInputType = {
   upCount?: true
   totalCount?: true
   upTime?: true
-  avgResponseTime?: true
 }
 
 export type DailyStatsMaxAggregateInputType = {
@@ -103,7 +95,6 @@ export type DailyStatsMaxAggregateInputType = {
   upCount?: true
   totalCount?: true
   upTime?: true
-  avgResponseTime?: true
 }
 
 export type DailyStatsCountAggregateInputType = {
@@ -113,7 +104,6 @@ export type DailyStatsCountAggregateInputType = {
   upCount?: true
   totalCount?: true
   upTime?: true
-  avgResponseTime?: true
   _all?: true
 }
 
@@ -210,7 +200,6 @@ export type DailyStatsGroupByOutputType = {
   upCount: number
   totalCount: number
   upTime: number
-  avgResponseTime: number
   _count: DailyStatsCountAggregateOutputType | null
   _avg: DailyStatsAvgAggregateOutputType | null
   _sum: DailyStatsSumAggregateOutputType | null
@@ -243,7 +232,6 @@ export type DailyStatsWhereInput = {
   upCount?: Prisma.IntFilter<"DailyStats"> | number
   totalCount?: Prisma.IntFilter<"DailyStats"> | number
   upTime?: Prisma.IntFilter<"DailyStats"> | number
-  avgResponseTime?: Prisma.IntFilter<"DailyStats"> | number
   api?: Prisma.XOR<Prisma.ApiScalarRelationFilter, Prisma.ApiWhereInput>
 }
 
@@ -254,7 +242,6 @@ export type DailyStatsOrderByWithRelationInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
   api?: Prisma.ApiOrderByWithRelationInput
 }
 
@@ -269,7 +256,6 @@ export type DailyStatsWhereUniqueInput = Prisma.AtLeast<{
   upCount?: Prisma.IntFilter<"DailyStats"> | number
   totalCount?: Prisma.IntFilter<"DailyStats"> | number
   upTime?: Prisma.IntFilter<"DailyStats"> | number
-  avgResponseTime?: Prisma.IntFilter<"DailyStats"> | number
   api?: Prisma.XOR<Prisma.ApiScalarRelationFilter, Prisma.ApiWhereInput>
 }, "id" | "apiId_date">
 
@@ -280,7 +266,6 @@ export type DailyStatsOrderByWithAggregationInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
   _count?: Prisma.DailyStatsCountOrderByAggregateInput
   _avg?: Prisma.DailyStatsAvgOrderByAggregateInput
   _max?: Prisma.DailyStatsMaxOrderByAggregateInput
@@ -298,7 +283,6 @@ export type DailyStatsScalarWhereWithAggregatesInput = {
   upCount?: Prisma.IntWithAggregatesFilter<"DailyStats"> | number
   totalCount?: Prisma.IntWithAggregatesFilter<"DailyStats"> | number
   upTime?: Prisma.IntWithAggregatesFilter<"DailyStats"> | number
-  avgResponseTime?: Prisma.IntWithAggregatesFilter<"DailyStats"> | number
 }
 
 export type DailyStatsCreateInput = {
@@ -307,7 +291,6 @@ export type DailyStatsCreateInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
   api: Prisma.ApiCreateNestedOneWithoutDailyStatsInput
 }
 
@@ -318,7 +301,6 @@ export type DailyStatsUncheckedCreateInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
 }
 
 export type DailyStatsUpdateInput = {
@@ -327,7 +309,6 @@ export type DailyStatsUpdateInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
   api?: Prisma.ApiUpdateOneRequiredWithoutDailyStatsNestedInput
 }
 
@@ -338,7 +319,6 @@ export type DailyStatsUncheckedUpdateInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DailyStatsCreateManyInput = {
@@ -348,7 +328,6 @@ export type DailyStatsCreateManyInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
 }
 
 export type DailyStatsUpdateManyMutationInput = {
@@ -357,7 +336,6 @@ export type DailyStatsUpdateManyMutationInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DailyStatsUncheckedUpdateManyInput = {
@@ -367,7 +345,6 @@ export type DailyStatsUncheckedUpdateManyInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DailyStatsListRelationFilter = {
@@ -392,14 +369,12 @@ export type DailyStatsCountOrderByAggregateInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
 }
 
 export type DailyStatsAvgOrderByAggregateInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
 }
 
 export type DailyStatsMaxOrderByAggregateInput = {
@@ -409,7 +384,6 @@ export type DailyStatsMaxOrderByAggregateInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
 }
 
 export type DailyStatsMinOrderByAggregateInput = {
@@ -419,14 +393,12 @@ export type DailyStatsMinOrderByAggregateInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
 }
 
 export type DailyStatsSumOrderByAggregateInput = {
   upCount?: Prisma.SortOrder
   totalCount?: Prisma.SortOrder
   upTime?: Prisma.SortOrder
-  avgResponseTime?: Prisma.SortOrder
 }
 
 export type DailyStatsCreateNestedManyWithoutApiInput = {
@@ -477,7 +449,6 @@ export type DailyStatsCreateWithoutApiInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
 }
 
 export type DailyStatsUncheckedCreateWithoutApiInput = {
@@ -486,7 +457,6 @@ export type DailyStatsUncheckedCreateWithoutApiInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
 }
 
 export type DailyStatsCreateOrConnectWithoutApiInput = {
@@ -525,7 +495,6 @@ export type DailyStatsScalarWhereInput = {
   upCount?: Prisma.IntFilter<"DailyStats"> | number
   totalCount?: Prisma.IntFilter<"DailyStats"> | number
   upTime?: Prisma.IntFilter<"DailyStats"> | number
-  avgResponseTime?: Prisma.IntFilter<"DailyStats"> | number
 }
 
 export type DailyStatsCreateManyApiInput = {
@@ -534,7 +503,6 @@ export type DailyStatsCreateManyApiInput = {
   upCount?: number
   totalCount?: number
   upTime?: number
-  avgResponseTime?: number
 }
 
 export type DailyStatsUpdateWithoutApiInput = {
@@ -543,7 +511,6 @@ export type DailyStatsUpdateWithoutApiInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DailyStatsUncheckedUpdateWithoutApiInput = {
@@ -552,7 +519,6 @@ export type DailyStatsUncheckedUpdateWithoutApiInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DailyStatsUncheckedUpdateManyWithoutApiInput = {
@@ -561,7 +527,6 @@ export type DailyStatsUncheckedUpdateManyWithoutApiInput = {
   upCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCount?: Prisma.IntFieldUpdateOperationsInput | number
   upTime?: Prisma.IntFieldUpdateOperationsInput | number
-  avgResponseTime?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -573,7 +538,6 @@ export type DailyStatsSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   upCount?: boolean
   totalCount?: boolean
   upTime?: boolean
-  avgResponseTime?: boolean
   api?: boolean | Prisma.ApiDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyStats"]>
 
@@ -584,7 +548,6 @@ export type DailyStatsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   upCount?: boolean
   totalCount?: boolean
   upTime?: boolean
-  avgResponseTime?: boolean
   api?: boolean | Prisma.ApiDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyStats"]>
 
@@ -595,7 +558,6 @@ export type DailyStatsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   upCount?: boolean
   totalCount?: boolean
   upTime?: boolean
-  avgResponseTime?: boolean
   api?: boolean | Prisma.ApiDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyStats"]>
 
@@ -606,10 +568,9 @@ export type DailyStatsSelectScalar = {
   upCount?: boolean
   totalCount?: boolean
   upTime?: boolean
-  avgResponseTime?: boolean
 }
 
-export type DailyStatsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "apiId" | "date" | "upCount" | "totalCount" | "upTime" | "avgResponseTime", ExtArgs["result"]["dailyStats"]>
+export type DailyStatsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "apiId" | "date" | "upCount" | "totalCount" | "upTime", ExtArgs["result"]["dailyStats"]>
 export type DailyStatsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   api?: boolean | Prisma.ApiDefaultArgs<ExtArgs>
 }
@@ -632,7 +593,6 @@ export type $DailyStatsPayload<ExtArgs extends runtime.Types.Extensions.Internal
     upCount: number
     totalCount: number
     upTime: number
-    avgResponseTime: number
   }, ExtArgs["result"]["dailyStats"]>
   composites: {}
 }
@@ -1063,7 +1023,6 @@ export interface DailyStatsFieldRefs {
   readonly upCount: Prisma.FieldRef<"DailyStats", 'Int'>
   readonly totalCount: Prisma.FieldRef<"DailyStats", 'Int'>
   readonly upTime: Prisma.FieldRef<"DailyStats", 'Int'>
-  readonly avgResponseTime: Prisma.FieldRef<"DailyStats", 'Int'>
 }
     
 

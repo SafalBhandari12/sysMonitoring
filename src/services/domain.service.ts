@@ -47,7 +47,23 @@ class DomainService {
     let isVerified = false;
     try {
       // Use the input as the hostname for DNS lookup
-      const txtRecords = await dns.resolveTxt(domain);
+      const ns = await dns.resolveNs(domain);
+
+      // Resolve first NS hostname to IP
+      if (!ns[0]) {
+        throw new BadRequestError("No NS records found for domain");
+      }
+      const nsIpRecords = await dns.resolve4(ns[0]);
+      const nsIp = nsIpRecords[0];
+
+      if (!nsIp) {
+        throw new BadRequestError("No A records found for NS hostname");
+      }
+
+      const resolver = new dns.Resolver();
+      resolver.setServers([nsIp]);
+
+      const txtRecords = await resolver.resolveTxt(domain);
       console.log(`TXT records for ${domain}:`, txtRecords);
       const expectedToken = `monitoring-verify=${domainDetails.verificationCode}`;
       for (const record of txtRecords) {
@@ -166,6 +182,32 @@ class DomainService {
         }),
       );
     }
+  }
+  static async apiStatusDetails(domain: string) {
+    const domainData = await prisma.domain.findUnique({
+      where: { domain },
+      select: {
+        id: true,
+      },
+    });
+    if (!domainData) {
+      throw new NotFoundError("Domain not found");
+    }
+    const apis = await prisma.api.findMany({
+      where: {
+        domainId: domainData.id,
+      },
+      select: {
+        name: true,
+        path: true,
+        method: true,
+        p90: true,
+        p99: true,
+        upTime: true,
+        averageResponseTime: true,
+      },
+    });
+    return apis;
   }
 }
 export default DomainService;

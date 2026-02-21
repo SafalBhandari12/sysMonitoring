@@ -32,8 +32,7 @@ export type methodEnum = (typeof methodEnum)[keyof typeof methodEnum]
 export const apiStatusEnum = {
   UP: 'UP',
   DOWN: 'DOWN',
-  TIMEOUT: 'TIMEOUT',
-  ERROR: 'ERROR'
+  TIMEOUT: 'TIMEOUT'
 } as const
 
 export type apiStatusEnum = (typeof apiStatusEnum)[keyof typeof apiStatusEnum]

@@ -1,4 +1,4 @@
-import type { methodEnum } from "../generated/prisma/enums.js";
+import { apiStatusEnum, type methodEnum } from "../generated/prisma/enums.js";
 import prisma from "../utils/prisma.js";
 
 export const getResponse = async (
@@ -8,31 +8,57 @@ export const getResponse = async (
   body?: any,
 ) => {
   const startTime = Date.now();
-  console.log(
-    `Making ${method} request to ${url} with headers:`,
-    headers,
-    "and body:",
-    body,
-  );
-  let response;
+
+  const controller = new AbortController();
+  const timeoutMs = 60000;
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
   try {
-    response = await fetch(url, {
+    const response = await fetch(url, {
       method,
       headers: headers ? JSON.parse(headers) : undefined,
       body: body ? JSON.stringify(body) : null,
       cache: "no-cache",
+      signal: controller.signal,
     });
-  } catch (e) {
-    console.error(`Error making request to ${url}:`, e);
-    return { statusCode: 500, responseTime: 0 };
-  }
-  const endTime = Date.now();
-  const responseTime = endTime - startTime;
-  const statusCode = response.status;
-  console.log(statusCode, responseTime);
-  return { statusCode, responseTime };
-};
 
+    clearTimeout(timeout);
+
+    const responseTime = Date.now() - startTime;
+
+    if (response.ok) {
+      return {
+        status: apiStatusEnum.UP,
+        statusCode: response.status,
+        responseTime,
+      };
+    } else {
+      return {
+        status: apiStatusEnum.DOWN,
+        statusCode: response.status,
+        responseTime,
+      };
+    }
+  } catch (e: any) {
+    clearTimeout(timeout);
+
+    const responseTime = Date.now() - startTime;
+
+    if (e.name === "AbortError") {
+      return {
+        status: apiStatusEnum.TIMEOUT,
+        statusCode: 408,
+        responseTime,
+      };
+    }
+
+    return {
+      status: apiStatusEnum.DOWN, // DNS failure, network error, etc.
+      statusCode: 0,
+      responseTime,
+    };
+  }
+};
 export const hitApi = async () => {
   try {
     // Fetch up to 100 APIs with their domain information
@@ -55,7 +81,6 @@ export const hitApi = async () => {
       orderBy: {
         updatedAt: "asc",
       },
-      take: 100,
     });
 
     console.log(`Processing ${apisToProcess.length} APIs in batches of 10`);
@@ -79,7 +104,7 @@ export const hitApi = async () => {
 
           // Fetch the API (outside transaction to avoid timeout issues)
           const response = await getResponse(url, method, headers, body);
-          const isUp = response.statusCode >= 200 && response.statusCode < 300;
+          const isUp = response.status === apiStatusEnum.UP;
 
           // Store response and update stats in a transaction
           await prisma.$transaction(async (tx) => {
@@ -89,7 +114,7 @@ export const hitApi = async () => {
                 apiId: id,
                 responseTime: response.responseTime,
                 statusCode: response.statusCode,
-                status: isUp ? "UP" : "DOWN",
+                status: response.status,
               },
             });
 
@@ -110,7 +135,6 @@ export const hitApi = async () => {
                   apiId: id,
                   date: dayStart,
                   upCount: isUp ? 1 : 0,
-                  avgResponseTime: response.responseTime,
                   totalCount: 1,
                   upTime: isUp ? 100 : 0,
                 },
@@ -118,16 +142,11 @@ export const hitApi = async () => {
             } else {
               const newUpCount = existing.upCount + (isUp ? 1 : 0);
               const newTotalCount = existing.totalCount + 1;
-              const newAvgResponseTime =
-                (existing.avgResponseTime * existing.totalCount +
-                  response.responseTime) /
-                newTotalCount;
 
               await tx.dailyStats.update({
                 where: { id: existing.id },
                 data: {
                   upCount: newUpCount,
-                  avgResponseTime: newAvgResponseTime,
                   totalCount: newTotalCount,
                   upTime: (newUpCount / newTotalCount) * 100,
                 },
@@ -169,33 +188,74 @@ export const processApiForUptime = async () => {
 
 export const calculateUptime = async (apiId: string) => {
   try {
-    const stats = await prisma.dailyStats.findMany({
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+
+    // 1) Get sums for uptime calculation (efficient aggregate)
+    const sums = await prisma.dailyStats.aggregate({
       where: {
         apiId,
-        date: {
-          gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
-        },
+        date: { gte: ninetyDaysAgo },
+      },
+      _sum: {
+        upCount: true,
+        totalCount: true,
       },
     });
-    let uptime = 0;
-    let total = 0;
-    let totalResponseTime = 0;
-    for (const stat of stats) {
-      uptime += stat.upCount;
-      total += stat.totalCount;
-      totalResponseTime += stat.avgResponseTime * stat.totalCount;
-    }
 
-    const uptimePercentage = total > 0 ? (uptime / total) * 100 : 0;
-    const averageResponseTime = total > 0 ? totalResponseTime / total : 0;
+    const upCountSum = sums._sum.upCount ?? 0;
+    const totalCountSum = sums._sum.totalCount ?? 0;
+    const uptimePercentage =
+      totalCountSum > 0 ? Math.round((upCountSum / totalCountSum) * 100) : 0;
+
+    // 2) Compute p90, p99 and average responseTime from ApiResponse for last 90 days
+    const percentileResult = (
+      await prisma.$queryRaw<
+        {
+          p90: number | string | null;
+          p99: number | string | null;
+          avg: number | string | null;
+        }[]
+      >`
+      SELECT
+        percentile_cont(0.90) WITHIN GROUP (ORDER BY "responseTime") AS p90,
+        percentile_cont(0.99) WITHIN GROUP (ORDER BY "responseTime") AS p99,
+        AVG("responseTime") AS avg
+      FROM "ApiResponse"
+      WHERE "apiId" = ${apiId}
+        AND "createdAt" >= ${ninetyDaysAgo};
+    `
+    )[0] ?? { p90: null, p99: null, avg: null };
+
+    // Postgres may return numeric types as strings depending on driver
+    const rawP90 =
+      percentileResult.p90 === null ? 0 : Number(percentileResult.p90);
+    const rawP99 =
+      percentileResult.p99 === null ? 0 : Number(percentileResult.p99);
+    const rawAvg =
+      percentileResult.avg === null ? 0 : Number(percentileResult.avg);
+
+    const p90 = Number.isFinite(rawP90) ? Math.round(rawP90) : 0;
+    const p99 = Number.isFinite(rawP99) ? Math.round(rawP99) : 0;
+    const averageResponseTime = Number.isFinite(rawAvg)
+      ? Math.round(rawAvg)
+      : 0;
+
+    // 3) Update the Api row
     await prisma.api.update({
       where: { id: apiId },
-      data: { upTime: uptimePercentage, averageResponseTime },
+      data: {
+        upTime: uptimePercentage, // int percent
+        p90,
+        p99,
+        // ensure your schema contains this field; previously you were using averageResponseTime
+        averageResponseTime,
+      },
     });
+
     console.log(
-      `Uptime percentage over last 90 days: ${uptimePercentage.toFixed(2)}%`,
+      `Uptime (90d): ${uptimePercentage}% — p90: ${p90} ms, p99: ${p99} ms, avg: ${averageResponseTime} ms`,
     );
   } catch (e) {
-    console.error(e);
+    console.error("calculateUptime error:", e);
   }
 };

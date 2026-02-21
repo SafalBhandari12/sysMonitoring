@@ -20,5 +20,10 @@ class DomainController {
     const response = await DomainService.getVerificationStatus(data.domain);
     return res.json(response);
   }
+  static async apiStatusDetails(req: Request, res: Response) {
+    const data = await domainSchema.parseAsync(req.query);
+    const response = await DomainService.apiStatusDetails(data.domain);
+    return res.json(response);
+  }
 }
 export default DomainController;

@@ -767,9 +767,9 @@ export const ApiScalarFieldEnum = {
   headers: 'headers',
   body: 'body',
   upTime: 'upTime',
-  averageResponseTime: 'averageResponseTime',
   p90: 'p90',
   p99: 'p99',
+  averageResponseTime: 'averageResponseTime',
   processingStatus: 'processingStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -796,8 +796,7 @@ export const DailyStatsScalarFieldEnum = {
   date: 'date',
   upCount: 'upCount',
   totalCount: 'totalCount',
-  upTime: 'upTime',
-  avgResponseTime: 'avgResponseTime'
+  upTime: 'upTime'
 } as const
 
 export type DailyStatsScalarFieldEnum = (typeof DailyStatsScalarFieldEnum)[keyof typeof DailyStatsScalarFieldEnum]
