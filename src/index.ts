@@ -4,6 +4,7 @@ import "./cron/index.js";
 import express, { type Request, type Response } from "express";
 import { hitApi, processApiForUptime } from "./lib/fetch.js";
 import { errorHandler } from "./lib/errorHandler.js";
+import { asyncHandler } from "./lib/asyncHandler.js";
 import domainRouter from "./routes/domain.route.js";
 import apiRouter from "./routes/api.route.js";
 
@@ -11,34 +12,28 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/health", (res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   return res.json({ status: "OK" });
 });
 
 app.use("/domain", domainRouter);
 app.use("/api", apiRouter);
 
-// app.get("/details", asyncHandler(ApiController.getDetails));
-
-app.get("/schedule", async (req: Request, res: Response) => {
-  try {
-    hitApi();
+app.get(
+  "/schedule",
+  asyncHandler(async (req: Request, res: Response) => {
+    await hitApi();
     res.json({ message: "Scheduled API call" });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+  }),
+);
 
-app.get("/uptime", async (req: Request, res: Response) => {
-  try {
+app.get(
+  "/uptime",
+  asyncHandler(async (req: Request, res: Response) => {
     await processApiForUptime();
     res.json({ message: "Uptime calculated" });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+  }),
+);
 
 app.use(errorHandler);
 
