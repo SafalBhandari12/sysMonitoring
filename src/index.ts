@@ -7,6 +7,8 @@ import { errorHandler } from "./lib/errorHandler.js";
 import { asyncHandler } from "./lib/asyncHandler.js";
 import domainRouter from "./routes/domain.route.js";
 import apiRouter from "./routes/api.route.js";
+import { connectRedis } from "./utils/redis.js";
+import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.use("/domain", domainRouter);
 app.use("/api", apiRouter);
+app.use("/auth",authRouter)
 
 app.get(
   "/schedule",
@@ -38,6 +41,7 @@ app.get(
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await connectRedis();
   console.log(`Server is running on port ${PORT}`);
 });

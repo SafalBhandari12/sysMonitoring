@@ -33,6 +33,21 @@ enum apiStatusEnum {
   TIMEOUT
 }
 
+model User{
+  id String @id @default(uuid())  
+  email String @unique
+  password String?
+
+  name String?
+  avatarUrl String?
+  googleId String? @unique
+
+  domains Domain[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Domain {
   id String @id @default(uuid())
 
@@ -49,6 +64,9 @@ model Domain {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Api {

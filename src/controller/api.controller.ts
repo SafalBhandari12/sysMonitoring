@@ -7,11 +7,11 @@ import {
 import ApiService from "../services/api.service.js";
 class ApiController {
   static async addApi(req: Request, res: Response) {
-    const paramsResult = await uuidSchema.parseAsync(req.params);
-    const bodyResult = await apiDetailsSchema.parseAsync(req.body);
+    const domainId = await uuidSchema.parseAsync(req.params);
+    const apiDetails = await apiDetailsSchema.parseAsync(req.body);
     const response = await ApiService.addApi({
-      domainId: paramsResult.domainId,
-      apiDetails: bodyResult,
+      domainId: domainId.domainId,
+      apiDetails: apiDetails,
     });
     return res.json({ msg: "Api Added Successfully", data: response });
   }
