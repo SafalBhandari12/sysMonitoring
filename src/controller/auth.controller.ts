@@ -20,15 +20,19 @@ class AuthController {
       oidcCodeVerifier: codeVerifier,
     };
 
-    const authUrl = oidc.buildAuthorizationUrl(oidConfig, {
-      redirect_url: config.GOOGLE_REDIRECT_URI,
-      scope: "openid email profile",
-      state,
-      nonce,
-      code_challenge: codeChallenge,
-      codechallenge_method: "S256",
+        const authUrl = oidc.buildAuthorizationUrl(oidConfig, {
+          redirect_uri: config.GOOGLE_REDIRECT_URI,
+          scope: "openid email profile",
+          state,
+          nonce,
+          code_challenge: codeChallenge,
+          code_challenge_method: "S256",
+        });
+
+        res.redirect(authUrl.href);
+        resolve();
+      });
     });
-    res.redirect(authUrl.href);
   }
   static async googleCallback(req: Request, res: Response) {
     const oidcConfig = await getOidConfig();
