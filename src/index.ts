@@ -7,12 +7,29 @@ import { errorHandler } from "./lib/errorHandler.js";
 import { asyncHandler } from "./lib/asyncHandler.js";
 import domainRouter from "./routes/domain.route.js";
 import apiRouter from "./routes/api.route.js";
-import { connectRedis } from "./utils/redis.js";
+import redisClient, { connectRedis } from "./utils/redis.js";
 import authRouter from "./routes/auth.route.js";
+import session from "express-session";
+import { RedisStore } from "connect-redis";
+import { config } from "./utils/config.js";
 
 const app = express();
 
 app.use(express.json());
+
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: config.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: config.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    }, // 1 day
+  }),
+);
 
 app.get("/health", (req: Request, res: Response) => {
   return res.json({ status: "OK" });
@@ -20,7 +37,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.use("/domain", domainRouter);
 app.use("/api", apiRouter);
-app.use("/auth",authRouter)
+app.use("/auth", authRouter);
 
 app.get(
   "/schedule",

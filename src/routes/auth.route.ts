@@ -5,5 +5,6 @@ import { asyncHandler } from "../lib/asyncHandler.js";
 const authRouter = Router();
 
 authRouter.get("/google/login", asyncHandler(AuthController.googleLogin));
+authRouter.get("/google/callback", asyncHandler(AuthController.googleCallback));
 
 export default authRouter;

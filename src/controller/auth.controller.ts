@@ -20,19 +20,23 @@ class AuthController {
       oidcCodeVerifier: codeVerifier,
     };
 
-        const authUrl = oidc.buildAuthorizationUrl(oidConfig, {
-          redirect_uri: config.GOOGLE_REDIRECT_URI,
-          scope: "openid email profile",
-          state,
-          nonce,
-          code_challenge: codeChallenge,
-          code_challenge_method: "S256",
-        });
-
-        res.redirect(authUrl.href);
-        resolve();
+    await new Promise<void>((resolve, reject) => {
+      req.session.save((err) => {
+        if (err) reject(err);
+        else resolve();
       });
     });
+
+    const authUrl = oidc.buildAuthorizationUrl(oidConfig, {
+      redirect_uri: config.GOOGLE_REDIRECT_URI,
+      scope: "openid email profile",
+      state,
+      nonce,
+      code_challenge: codeChallenge,
+      code_challenge_method: "S256",
+    });
+
+    res.redirect(authUrl.href);
   }
   static async googleCallback(req: Request, res: Response) {
     const oidcConfig = await getOidConfig();
@@ -41,6 +45,7 @@ class AuthController {
       return res.status(400).json({ error: "Missing OIDC session data" });
     }
     const { oidcCodeVerifier, oidcNonce, oidcState } = req.session.oidc;
+    console.log("OIDC Session Data:", req.session.oidc);
 
     const currentUrl = new URL(
       req.originalUrl,
@@ -69,7 +74,10 @@ class AuthController {
         avatarUrl: userInfo.profile ?? null,
       },
     });
+
     req.session.sessionId = user.id;
+    delete req.session.oidc;
+
     res.redirect("/dashboard");
   }
 }

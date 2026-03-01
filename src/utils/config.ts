@@ -8,4 +8,6 @@ export const config = {
   GOOGLE_REDIRECT_URI:
     process.env.GOOGLE_REDIRECT_URI ||
     "http://localhost:3000/auth/google/callback",
+  SESSION_SECRET: process.env.SESSION_SECRET || "random-session-secret",
+  NODE_ENV: process.env.NODE_ENV || "development",
 };
