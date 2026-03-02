@@ -27,6 +27,7 @@ app.use(
       secure: config.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
+      sameSite: config.NODE_ENV === "production" ? "strict" : "lax",
     }, // 1 day
   }),
 );

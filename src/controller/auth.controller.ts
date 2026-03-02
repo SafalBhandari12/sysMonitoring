@@ -61,24 +61,38 @@ class AuthController {
       tokens.access_token,
       tokens.claims()!.sub,
     );
+    console.log("User Info:", userInfo);
 
     const user = await prisma.user.upsert({
       where: { email: userInfo.email! },
       update: {
         name: userInfo.name ?? null,
-        avatarUrl: userInfo.profile ?? null,
+        avatarUrl: userInfo.picture ?? null,
       },
       create: {
         email: userInfo.email!,
         name: userInfo.name ?? null,
-        avatarUrl: userInfo.profile ?? null,
+        avatarUrl: userInfo.picture ?? null,
       },
     });
 
     req.session.sessionId = user.id;
     delete req.session.oidc;
 
-    res.redirect("/dashboard");
+    res.json({
+      msg: "Login successful",
+      user: { email: user.email, name: user.name, avatarUrl: user.avatarUrl },
+    });
+  }
+  static async getProfile(req: Request, res: Response) {
+    const user = await prisma.user.findUnique({
+      where: { id: req.session.sessionId! },
+    });
+    return res.json({
+      email: user?.email,
+      name: user?.name,
+      avatarUrl: user?.avatarUrl,
+    });
   }
 }
 
