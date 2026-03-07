@@ -2,9 +2,7 @@ import "dotenv/config";
 import "./cron/index.js";
 
 import express, { type Request, type Response } from "express";
-import { hitApi, processApiForUptime } from "./lib/fetch.js";
 import { errorHandler } from "./lib/errorHandler.js";
-import { asyncHandler } from "./lib/asyncHandler.js";
 import router from "./routes/index.js";
 import redisClient, { connectRedis } from "./utils/redis.js";
 import session from "express-session";
@@ -35,15 +33,6 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 app.use("/", router);
-
-app.get(
-  "/schedule",
-  asyncHandler(async (req: Request, res: Response) => {
-    await hitApi();
-    res.json({ message: "Scheduled API call" });
-  }),
-);
-
 
 app.use(errorHandler);
 

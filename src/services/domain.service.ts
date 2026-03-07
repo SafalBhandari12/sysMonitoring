@@ -197,11 +197,16 @@ class DomainService {
     if (!domainData) {
       throw new NotFoundError("Domain not found");
     }
+
+    const ninetyDaysAgo = new Date();
+    ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+
     const apis = await prisma.api.findMany({
       where: {
         domainId: domainData.id,
       },
       select: {
+        id: true,
         name: true,
         path: true,
         method: true,
@@ -209,6 +214,22 @@ class DomainService {
         p99: true,
         upTime: true,
         averageResponseTime: true,
+        dailyStats: {
+          where: {
+            date: {
+              gte: ninetyDaysAgo,
+            },
+          },
+          select: {
+            date: true,
+            upCount: true,
+            totalCount: true,
+            upTime: true,
+          },
+          orderBy: {
+            date: "desc",
+          },
+        },
       },
     });
     return apis;

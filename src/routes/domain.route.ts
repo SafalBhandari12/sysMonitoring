@@ -1,7 +1,6 @@
-import { Router, type Request, type Response } from "express";
+import { Router } from "express";
 import { asyncHandler } from "../lib/asyncHandler.js";
 import DomainController from "../controller/domain.controller.js";
-import { processApiForUptime } from "../lib/fetch.js";
 import { authenticationMiddleware } from "../middleware/authentication.middleware.js";
 
 const router = Router();
@@ -18,13 +17,5 @@ router.get(
 );
 
 router.get("/details", asyncHandler(DomainController.apiStatusDetails));
-
-router.get(
-  "/calculateUptime",
-  asyncHandler(async (req: Request, res: Response) => {
-    processApiForUptime();
-    return res.json({ message: "Uptime calculated successfully" });
-  }),
-);
 
 export default router;

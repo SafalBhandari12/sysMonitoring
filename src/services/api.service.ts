@@ -1,11 +1,7 @@
-import {
-  DomainVerificationStatus,
-  Prisma,
-} from "../generated/prisma/client.js";
+
 import prisma from "../utils/prisma.js";
 import type { apiDetailsSchema } from "../schema/schema.js";
 import { CONFLICT_ERROR, NotFoundError } from "../lib/AppError.js";
-import { getBaseDomain } from "../utils/domain.js";
 
 class ApiService {
   static async addApi(data: {
