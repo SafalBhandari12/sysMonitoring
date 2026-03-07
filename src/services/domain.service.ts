@@ -9,18 +9,19 @@ import dns from "dns/promises";
 dns.setServers(["8.8.8.8"]);
 
 class DomainService {
-  static async registerDomain(domain: string) {
+  static async registerDomain(domain: string, userId: string) {
     const existingDomain = await prisma.domain.findFirst({
       where: {
         domain,
       },
     });
     if (existingDomain) {
-      throw new CONFLICT_ERROR("API with the same URL already exists");
+      throw new CONFLICT_ERROR("A domain with this name already exists");
     }
     const response = await prisma.domain.create({
       data: {
         domain,
+        userId,
       },
       select: {
         id: true,
@@ -31,12 +32,15 @@ class DomainService {
     });
     return response;
   }
-  static async verifyDomain(domain: string) {
+  static async verifyDomain(domain: string, userId?: string) {
     const domainDetails = await prisma.domain.findFirst({
       where: { domain: domain },
     });
     console.log(domainDetails);
     if (!domainDetails) {
+      throw new NotFoundError("Domain not found");
+    }
+    if (userId && domainDetails.userId !== userId) {
       throw new NotFoundError("Domain not found");
     }
     if (
@@ -108,13 +112,13 @@ class DomainService {
     });
     return updated;
   }
-  static async getVerificationStatus(domain: string) {
+  static async getVerificationStatus(domain: string, userId: string) {
     const api = await prisma.domain.findUnique({
-      where: { domain: domain },
+      where: { domain: domain, userId },
       select: { verificationStatus: true, verificationCode: true },
     });
     if (!api) {
-      throw new NotFoundError("API not found");
+      throw new NotFoundError("Domain not found");
     }
     if (api.verificationStatus === "VERIFIED") {
       return {
@@ -183,9 +187,9 @@ class DomainService {
       );
     }
   }
-  static async apiStatusDetails(domain: string) {
+  static async apiStatusDetails(domain: string, userId: string) {
     const domainData = await prisma.domain.findUnique({
-      where: { domain },
+      where: { domain, userId },
       select: {
         id: true,
       },

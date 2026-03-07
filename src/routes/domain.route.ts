@@ -2,8 +2,11 @@ import { Router, type Request, type Response } from "express";
 import { asyncHandler } from "../lib/asyncHandler.js";
 import DomainController from "../controller/domain.controller.js";
 import { processApiForUptime } from "../lib/fetch.js";
+import { authenticationMiddleware } from "../middleware/authentication.middleware.js";
 
 const router = Router();
+
+router.use(authenticationMiddleware);
 
 router.post("/register-domain", asyncHandler(DomainController.registerDomain));
 

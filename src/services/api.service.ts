@@ -11,10 +11,11 @@ class ApiService {
   static async addApi(data: {
     domainId: string;
     apiDetails: apiDetailsSchema;
+    userId: string;
   }) {
-    const { domainId, apiDetails } = data;
-    const domainExists = await prisma.domain.findUnique({
-      where: { id: domainId },
+    const { domainId, apiDetails, userId } = data;
+    const domainExists = await prisma.domain.findFirst({
+      where: { id: domainId, userId },
     });
     if (!domainExists) {
       throw new NotFoundError("Domain not found");

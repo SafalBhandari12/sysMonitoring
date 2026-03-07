@@ -5,10 +5,8 @@ import express, { type Request, type Response } from "express";
 import { hitApi, processApiForUptime } from "./lib/fetch.js";
 import { errorHandler } from "./lib/errorHandler.js";
 import { asyncHandler } from "./lib/asyncHandler.js";
-import domainRouter from "./routes/domain.route.js";
-import apiRouter from "./routes/api.route.js";
+import router from "./routes/index.js";
 import redisClient, { connectRedis } from "./utils/redis.js";
-import authRouter from "./routes/auth.route.js";
 import session from "express-session";
 import { RedisStore } from "connect-redis";
 import { config } from "./utils/config.js";
@@ -36,9 +34,7 @@ app.get("/health", (req: Request, res: Response) => {
   return res.json({ status: "OK" });
 });
 
-app.use("/domain", domainRouter);
-app.use("/api", apiRouter);
-app.use("/auth", authRouter);
+app.use("/", router);
 
 app.get(
   "/schedule",
@@ -48,13 +44,6 @@ app.get(
   }),
 );
 
-app.get(
-  "/uptime",
-  asyncHandler(async (req: Request, res: Response) => {
-    await processApiForUptime();
-    res.json({ message: "Uptime calculated" });
-  }),
-);
 
 app.use(errorHandler);
 
