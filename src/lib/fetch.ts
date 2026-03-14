@@ -71,7 +71,12 @@ export const hitApi = async () => {
           },
         },
       },
-      include: {
+      select: {
+        id: true,
+        path: true,
+        method: true,
+        headers: true,
+        body: true,
         domain: {
           select: {
             domain: true,
@@ -207,54 +212,15 @@ export const calculateUptime = async (apiId: string) => {
     const uptimePercentage =
       totalCountSum > 0 ? Math.round((upCountSum / totalCountSum) * 100) : 0;
 
-    // 2) Compute p90, p99 and average responseTime from ApiResponse for last 90 days
-    const percentileResult = (
-      await prisma.$queryRaw<
-        {
-          p90: number | string | null;
-          p99: number | string | null;
-          avg: number | string | null;
-        }[]
-      >`
-      SELECT
-        percentile_cont(0.90) WITHIN GROUP (ORDER BY "responseTime") AS p90,
-        percentile_cont(0.99) WITHIN GROUP (ORDER BY "responseTime") AS p99,
-        AVG("responseTime") AS avg
-      FROM "ApiResponse"
-      WHERE "apiId" = ${apiId}
-        AND "createdAt" >= ${ninetyDaysAgo};
-    `
-    )[0] ?? { p90: null, p99: null, avg: null };
-
-    // Postgres may return numeric types as strings depending on driver
-    const rawP90 =
-      percentileResult.p90 === null ? 0 : Number(percentileResult.p90);
-    const rawP99 =
-      percentileResult.p99 === null ? 0 : Number(percentileResult.p99);
-    const rawAvg =
-      percentileResult.avg === null ? 0 : Number(percentileResult.avg);
-
-    const p90 = Number.isFinite(rawP90) ? Math.round(rawP90) : 0;
-    const p99 = Number.isFinite(rawP99) ? Math.round(rawP99) : 0;
-    const averageResponseTime = Number.isFinite(rawAvg)
-      ? Math.round(rawAvg)
-      : 0;
-
-    // 3) Update the Api row
+    // 2) Update the Api row
     await prisma.api.update({
       where: { id: apiId },
       data: {
         upTime: uptimePercentage, // int percent
-        p90,
-        p99,
-        // ensure your schema contains this field; previously you were using averageResponseTime
-        averageResponseTime,
       },
     });
 
-    console.log(
-      `Uptime (90d): ${uptimePercentage}% — p90: ${p90} ms, p99: ${p99} ms, avg: ${averageResponseTime} ms`,
-    );
+    console.log(`Uptime (90d): ${uptimePercentage}%`);
   } catch (e) {
     console.error("calculateUptime error:", e);
   }
