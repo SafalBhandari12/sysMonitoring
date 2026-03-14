@@ -210,10 +210,7 @@ class DomainService {
         name: true,
         path: true,
         method: true,
-        p90: true,
-        p99: true,
         upTime: true,
-        averageResponseTime: true,
         dailyStats: {
           where: {
             date: {
