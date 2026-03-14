@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Api" ADD COLUMN     "upTime" INTEGER NOT NULL DEFAULT 0;
