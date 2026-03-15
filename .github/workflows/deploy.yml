@@ -58,14 +58,14 @@ jobs:
             set -e
             # Clean old app and kill PM2 processes
             pm2 delete sysMonitoring 2>/dev/null || true
-            rm -rf /home/Safal/sysMonitoring
-            mkdir -p /home/Safal/sysMonitoring
+            rm -rf /home/azureuser/sysMonitoring
+            mkdir -p /home/azureuser/sysMonitoring
 
             # Extract new build
-            tar -xzf /tmp/artifact-sysMonitoring.tar.gz -C /home/Safal/sysMonitoring
+            tar -xzf /tmp/artifact-sysMonitoring.tar.gz -C /home/azureuser/sysMonitoring
             rm /tmp/artifact-sysMonitoring.tar.gz
 
-            cd /home/Safal/sysMonitoring
+            cd /home/azureuser/sysMonitoring
 
             # Copy .env file if needed
             cp /var/envs/sysMonitoring.env .env
