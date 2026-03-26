@@ -8,6 +8,7 @@ import redisClient, { connectRedis } from "./utils/redis.js";
 import session from "express-session";
 import { RedisStore } from "connect-redis";
 import { config } from "./utils/config.js";
+import notFound from "./lib/notFound.js";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.use("/", router);
 
+app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;

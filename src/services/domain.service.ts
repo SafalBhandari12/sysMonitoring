@@ -229,7 +229,18 @@ class DomainService {
         },
       },
     });
-    return apis;
+    const groupedApis = apis.reduce(
+      (groups: { [key: string]: typeof apis }, api) => {
+        const groupId = api.path.split("/")[1] || "root";
+        if (!groups[groupId]) {
+          groups[groupId] = [];
+        }
+        groups[groupId].push(api);
+        return groups;
+      },
+      {},
+    );
+    return groupedApis;
   }
 }
 export default DomainService;
